@@ -4,7 +4,10 @@ using namespace std;
 
 int main() 
 {
-	Product product;
+	Product prod;
+	prod.setName("Bread");
+	Product prod2(prod);
+	Product prod3 = prod2;
 
-	cout << "";
+	cout << endl;
 }

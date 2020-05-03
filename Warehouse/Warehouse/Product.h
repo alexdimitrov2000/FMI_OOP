@@ -1,37 +1,38 @@
 #pragma once
-//#include <string>
+#include <string>
 #include "ProductLocation.h"
+
+using namespace std;
 
 class Product  {
 private:
-	//std::string name;
-	char* name;
+	string name;
 	//Date expiryDate;
 	//Date entryDate;
-	char* manufacturerName;
-	char* unit;
+	string manufacturerName;
+	string unit;
 	unsigned int availableQuantity;
 	ProductLocation location;
-	char* comment;
+	string comment;
 
 public:
 	Product();
-	Product(const char* name, const char* manufacturerName, const char* unit, unsigned int availableQuantity, const ProductLocation& location, const char* comment);
+	Product(const string& name, const string& manufacturerName, const string& unit, unsigned int availableQuantity, const ProductLocation& location, const string& comment);
 	Product(const Product& other);
 	Product& operator=(const Product& other);
 	~Product();
 
-	char* getName() const;
-	char* getManufacturerName() const;
-	char* getUnit() const;
+	string getName() const;
+	string getManufacturerName() const;
+	string getUnit() const;
 	unsigned int getAvailableQuantity() const;
 	ProductLocation getLocation() const;
-	char* getComment() const;
+	string getComment() const;
 
-	void setName(const char* name);
-	void setManufacturerName(const char* manufacturerName);
-	void setUnit(const char* unit);
+	void setName(const string& name);
+	void setManufacturerName(const string& manufacturerName);
+	void setUnit(const string& unit);
 	void setAvailableQuantity(const unsigned int quantity);
 	void setLocation(const ProductLocation& location);
-	void setComment(const char* comment);
+	void setComment(const string& comment);
 };

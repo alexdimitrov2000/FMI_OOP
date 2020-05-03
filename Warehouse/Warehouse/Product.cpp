@@ -1,42 +1,65 @@
 #include "Product.h"
 #include <cstring>
 
-Product::Product() : location() {
-	this->name = nullptr;
-	this->manufacturerName = nullptr;
-	this->unit = nullptr;
-	this->availableQuantity = 0;
-	this->comment = nullptr;
+Product::Product() : name(""), manufacturerName(""), unit(""), availableQuantity(0), location(), comment("") {}
+
+Product::Product(const string& name, const string& manufacturerName, const string& unit, unsigned int availableQuantity, const ProductLocation& location, const string& comment) 
+				: name(name), manufacturerName(manufacturerName), unit(unit), availableQuantity(availableQuantity), location(location), comment(comment) {}
+
+Product::Product(const Product& other) 
+				: name(other.name), manufacturerName(other.manufacturerName), unit(other.unit), availableQuantity(other.availableQuantity), 
+				  location(other.location), comment(other.comment) {}
+
+Product& Product::operator=(const Product& other) {
+	if (this != &other)
+	{
+		this->name = other.name;
+		this->manufacturerName = other.manufacturerName;
+		this->unit = other.unit;
+		this->availableQuantity = other.availableQuantity;
+		this->location = other.location;
+		this->comment = other.comment;
+	}
+
+	return *this;
 }
 
-Product::Product(const char* name, const char* manufacturerName, const char* unit, unsigned int availableQuantity, const ProductLocation& location, const char* comment) {
-	this->setName(name);
-	this->setManufacturerName(manufacturerName);
-	this->setUnit(unit);
-	this->availableQuantity = availableQuantity;
-	this->location = location;
-	this->setComment(comment);
+Product::~Product() {}
+
+string Product::getName() const {
+	return this->name;
 }
 
-void Product::setName(const char* name) {
-	delete[] this->name;
-
-	this->name = new char[strlen(name) + 1];
-	strcpy_s(this->name, strlen(name) + 1, name);
+string Product::getManufacturerName() const {
+	return this->manufacturerName;
 }
 
-void Product::setManufacturerName(const char* manufacturerName) {
-	delete[] this->manufacturerName;
-
-	this->manufacturerName = new char[strlen(manufacturerName) + 1];
-	strcpy_s(this->manufacturerName, strlen(manufacturerName) + 1, manufacturerName);
+string Product::getUnit() const {
+	return this->unit;
 }
 
-void Product::setUnit(const char* unit) {
-	delete[] this->unit;
+unsigned int Product::getAvailableQuantity() const {
+	return this->availableQuantity;
+}
 
-	this->unit = new char[strlen(unit) + 1];
-	strcpy_s(this->unit, strlen(unit) + 1, unit);
+ProductLocation Product::getLocation() const {
+	return this->location;
+}
+
+string Product::getComment() const {
+	return this->comment;
+}
+
+void Product::setName(const string& name) {
+	this->name = name;
+}
+
+void Product::setManufacturerName(const string& manufacturerName) {
+	this->manufacturerName = manufacturerName;
+}
+
+void Product::setUnit(const string& unit) {
+	this->unit = unit;
 }
 
 void Product::setAvailableQuantity(const unsigned int quantity) {
@@ -47,9 +70,6 @@ void Product::setLocation(const ProductLocation& location) {
 	this->location = location;
 }
 
-void Product::setComment(const char* comment) {
-	delete[] this->comment;
-
-	this->comment = new char[strlen(comment) + 1];
-	strcpy_s(this->comment, strlen(comment) + 1, comment);
+void Product::setComment(const string& comment) {
+	this->comment = comment;
 }
