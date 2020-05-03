@@ -27,6 +27,9 @@
     <ClCompile Include="Product.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Date.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Warehouse.h">
@@ -36,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ProductLocation.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Date.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
