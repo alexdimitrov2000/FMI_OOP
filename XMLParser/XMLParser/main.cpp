@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <regex>
 #include "Element.h"
+#include "FileManager.h"
 
 template <typename T>
 void print(vector<T> seq) {
@@ -35,14 +37,14 @@ int main()
 	nums.clear();
 	cout << boolalpha << nums.empty() << endl;*/
 
-	Attribute attr;
+	/*Attribute attr;
 
 	attr.setName("src");
-	attr.setValue("../images/img.png");
+	attr.setValue("../images/img.png");*/
 
-	cout << attr.getName() << ": " << attr.getValue() << endl;
+	//cout << attr.getName() << ": " << attr.getValue() << endl;
 
-	Element element;
+	/*Element element;
 	element.setId("1_1");
 	element.setTag("img");
 	element.setIsTagSelfClosed(true);
@@ -52,8 +54,37 @@ int main()
 	el2.setId("2");
 	el2.addChildElement(element);
 	el2.addAttribute(attr);
+	
+	Element el3("div");
+	el3.setId("3");
+	el3.addChildElement(el2);
 
-	cout << el2;
+	cout << el3;
+	*/
+	/*const string s = "             <img src=\"images/img\" alt\"img\" />          <asd></asd>";
+	regex rgx("<([^>]+)>");
+	smatch match;
+
+	if (regex_search(s.begin(), s.end(), match, rgx)) {
+		cout << "match: " << match[0] << '\n';
+		cout << "match 1: " << match[1] << '\n';
+	}*/
+
+	// FileManager fileManager;
+	// fileManager.open("test.xml");
+	// 
+	// cout << fileManager.getFileContent()[1] << endl;
+	// cout << fileManager.getFileContent()[2] << endl;
+	// 
+	// fileManager.save();
+	// 
+	// string filePath = "D:\\Downloads\\soldProducts.xml";
+	// fileManager.saveAs(filePath);
+	// 
+	// fileManager.help();
+	// 
+	// fileManager.close();
+
 
 	cout << endl;
 }

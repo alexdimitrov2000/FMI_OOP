@@ -1,0 +1,13 @@
+<users>
+  <user first-name="Fred" last-name="Barnes">
+    <sold-products>
+      <product name="Growing Pains" price="1077.37" />
+    </sold-products>
+  </user>
+  <user last-name="Cunningham">
+    <sold-products>
+      <product name="Aquafresh" price="849.93" />
+      <product name="Buprenorphine hydrochloride" price="391.05" />
+    </sold-products>
+  </user>
+</users>
