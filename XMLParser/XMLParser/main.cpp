@@ -1,7 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <regex>
-#include "Element.h"
 #include "FileManager.h"
 #include "Input.h"
 
@@ -18,6 +16,7 @@ const char HELP_COMMAND[] = "help";
 const char EXIT_COMMAND[] = "exit";
 
 // Command Messages
+const char UNOPENED_FILE_MESSAGE[] = "There is no file opened. You have to open a file at first.";
 const char INVALID_COMMAND_MESSAGE[] = "Invalid command.";
 
 int main()
@@ -26,7 +25,9 @@ int main()
 	string userInput;
 	cout << USER_INPUT_MESSAGE;
 	getline(cin, userInput);
+	
 	Input input;
+	FileManager fileManager;
 
 	while (userInput != EXIT_COMMAND)
 	{
@@ -38,19 +39,27 @@ int main()
 		size_t tokensCnt = tokens.size();
 
 		if (command == OPEN_COMMAND) {
-			cout << "open" << endl;
-		}
-		else if (command == SAVE_COMMAND) {
-			cout << "save" << endl;
-		}
-		else if (command == SAVE_AS_COMMAND) {
-			cout << "save as" << endl;
-		}
-		else if (command == CLOSE_COMMAND) {
-			cout << "close" << endl;
+			string filePath = tokens[1];
+			fileManager.open(filePath);
+
+			if (!fileManager.isFileOpened())
+				fileManager.isFileOpened(true);
 		}
 		else if (command == HELP_COMMAND) {
-			cout << "help" << endl;
+			fileManager.help();
+		}
+		else if (!fileManager.isFileOpened()) {
+			cout << UNOPENED_FILE_MESSAGE << endl;
+		}
+		else if (command == SAVE_COMMAND) {
+			fileManager.save();
+		}
+		else if (command == SAVE_AS_COMMAND) {
+			string filePath = tokens[1];
+			fileManager.saveAs(filePath);
+		}
+		else if (command == CLOSE_COMMAND) {
+			fileManager.close();
 		}
 		else {
 			cout << INVALID_COMMAND_MESSAGE << endl;
