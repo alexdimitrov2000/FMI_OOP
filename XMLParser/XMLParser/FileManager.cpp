@@ -15,7 +15,6 @@ const string HELP_MESSAGE = "The following commands are supported:\n"
 							"saveAs <file>	saves the currently open file in <file>\n"
 							"help		prints this information\n"
 							"exit		exits the program";
-const string EXIT_MESSAGE = "Exiting the program...";
 
 FileManager::FileManager() : lines(), filePath(), isOpened() {}
 
