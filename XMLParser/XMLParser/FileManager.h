@@ -12,6 +12,9 @@ private:
 public:
 	FileManager();
 
+	bool isFileOpened() const;
+	void isFileOpened(bool isOpened);
+
 	void open(const string& filePath);
 	void save();
 	void saveAs(const string& filePath);

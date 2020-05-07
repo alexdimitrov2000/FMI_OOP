@@ -18,6 +18,14 @@ const string HELP_MESSAGE = "The following commands are supported:\n"
 
 FileManager::FileManager() : lines(), filePath(), isOpened() {}
 
+bool FileManager::isFileOpened() const {
+	return this->isOpened;
+}
+
+void FileManager::isFileOpened(bool isOpened) {
+	this->isOpened = isOpened;
+}
+
 void FileManager::open(const string& filePath) {
 	this->filePath = filePath;
 
