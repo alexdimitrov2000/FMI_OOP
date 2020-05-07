@@ -3,88 +3,63 @@
 #include <regex>
 #include "Element.h"
 #include "FileManager.h"
+#include "Input.h"
 
-template <typename T>
-void print(vector<T> seq) {
-	int size = seq.size();
-	for (size_t i = 0; i < size; i++)
-	{
-		cout << seq[i] << " ";
-	}
-	cout << endl;
-}
+const char WELCOME_MESSAGE[] = "Welcome to our 'XML Parser' application! \nYou can enter 'help' for commands info.\n";
+const char USER_INPUT_MESSAGE[] = "Please, enter your command or type 'exit' if you want to quit: ";
+const char EXIT_MESSAGE[] = "Exiting the program...";
 
-int main() 
+// Commands
+const char OPEN_COMMAND[] = "open";
+const char SAVE_COMMAND[] = "save";
+const char SAVE_AS_COMMAND[] = "saveAs";
+const char CLOSE_COMMAND[] = "close";
+const char HELP_COMMAND[] = "help";
+const char EXIT_COMMAND[] = "exit";
+
+// Command Messages
+const char INVALID_COMMAND_MESSAGE[] = "Invalid command.";
+
+int main()
 {
-	/*vector<int> nums;
-	nums.push_back(1);
-	nums.push_back(3);
-	nums.push_back(2);
-	nums.push_back(5);
-	nums.push_back(4);
-	print(nums);
-	nums.pop_back();
-	print(nums);
-	cout << nums.at(2) << endl;
-	int iter = nums.back();
-	cout << iter << endl;
-	cout << nums.capacity() << endl;
-	int* data = nums.data();
-	cout << data[0] << endl;
-	cout << boolalpha << nums.empty() << endl;
-	cout << nums.front() << endl;
-	cout << nums.size() << endl;
-	nums.clear();
-	cout << boolalpha << nums.empty() << endl;*/
+	cout << WELCOME_MESSAGE << endl;
+	string userInput;
+	cout << USER_INPUT_MESSAGE;
+	getline(cin, userInput);
+	Input input;
 
-	/*Attribute attr;
+	while (userInput != EXIT_COMMAND)
+	{
+		input.setData(userInput);
+		input.split();
 
-	attr.setName("src");
-	attr.setValue("../images/img.png");*/
+		vector<string> tokens = input.getTokens();
+		string command = tokens[0];
+		size_t tokensCnt = tokens.size();
 
-	//cout << attr.getName() << ": " << attr.getValue() << endl;
+		if (command == OPEN_COMMAND) {
+			cout << "open" << endl;
+		}
+		else if (command == SAVE_COMMAND) {
+			cout << "save" << endl;
+		}
+		else if (command == SAVE_AS_COMMAND) {
+			cout << "save as" << endl;
+		}
+		else if (command == CLOSE_COMMAND) {
+			cout << "close" << endl;
+		}
+		else if (command == HELP_COMMAND) {
+			cout << "help" << endl;
+		}
+		else {
+			cout << INVALID_COMMAND_MESSAGE << endl;
+		}
 
-	/*Element element;
-	element.setId("1_1");
-	element.setTag("img");
-	element.setIsTagSelfClosed(true);
-	element.addAttribute(attr);
-	
-	Element el2("div");
-	el2.setId("2");
-	el2.addChildElement(element);
-	el2.addAttribute(attr);
-	
-	Element el3("div");
-	el3.setId("3");
-	el3.addChildElement(el2);
+		cout << USER_INPUT_MESSAGE;
+		input.clearData();
+		getline(cin, userInput);
+	}
 
-	cout << el3;
-	*/
-	/*const string s = "             <img src=\"images/img\" alt\"img\" />          <asd></asd>";
-	regex rgx("<([^>]+)>");
-	smatch match;
-
-	if (regex_search(s.begin(), s.end(), match, rgx)) {
-		cout << "match: " << match[0] << '\n';
-		cout << "match 1: " << match[1] << '\n';
-	}*/
-
-	// FileManager fileManager;
-	// fileManager.open("test.xml");
-	// 
-	// cout << fileManager.getFileContent()[1] << endl;
-	// cout << fileManager.getFileContent()[2] << endl;
-	// 
-	// fileManager.save();
-	// 
-	// string filePath = "D:\\Downloads\\soldProducts.xml";
-	// fileManager.saveAs(filePath);
-	// 
-	// fileManager.help();
-	// 
-	// fileManager.close();
-
-
-	cout << endl;
+	cout << EXIT_MESSAGE << endl;
 }
