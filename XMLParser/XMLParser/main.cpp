@@ -2,6 +2,7 @@
 #include <vector>
 #include "FileManager.h"
 #include "Input.h"
+#include "XmlParser.h"
 
 const char WELCOME_MESSAGE[] = "Welcome to our 'XML Parser' application! \nYou can enter 'help' for commands info.\n";
 const char USER_INPUT_MESSAGE[] = "Please, enter your command or type 'exit' if you want to quit: ";
@@ -28,6 +29,7 @@ int main()
 	
 	Input input;
 	FileManager fileManager;
+	XmlParser parser;
 
 	while (userInput != EXIT_COMMAND)
 	{
@@ -41,6 +43,8 @@ int main()
 		if (command == OPEN_COMMAND) {
 			string filePath = tokens[1];
 			fileManager.open(filePath);
+
+			parser.parse(fileManager.getFileContent());
 
 			if (!fileManager.isFileOpened())
 				fileManager.isFileOpened(true);
