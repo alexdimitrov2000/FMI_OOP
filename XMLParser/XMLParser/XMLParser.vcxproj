@@ -30,6 +30,8 @@
     <ClInclude Include="Element.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="StringHelper.h" />
+    <ClInclude Include="XmlParser.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
