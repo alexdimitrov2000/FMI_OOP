@@ -1,9 +1,12 @@
 #include <ostream>
 #include "Element.h"
 
-Element::Element() : id(), tag(), attributes(), children(), content(), isSelfClosed(false) {}
+Element::Element() : id(), tag(), attributes(), children(), content(), isTagSelfClosed(false), isElementClosed(false) {}
 
-Element::Element(const string& tag, bool isTagSelfClosed) : id(), tag(tag), attributes(), children(), content(), isSelfClosed(isTagSelfClosed) {}
+Element::Element(const string& tag, bool isSelfClosed) : id(), tag(tag), attributes(), children(), content(), isTagSelfClosed(isSelfClosed), isElementClosed(false) {}
+
+Element::Element(const Element& other) : id(other.id), tag(other.tag), attributes(other.attributes), 
+										 children(other.children), content(other.content), isTagSelfClosed(other.isTagSelfClosed), isElementClosed(other.isElementClosed) {}
 
 string Element::getId() const {
 	return this->id;
@@ -17,7 +20,7 @@ vector<Attribute> Element::getAttributes() const {
 	return this->attributes;
 }
 
-vector<Element> Element::getChildren() const {
+vector<Element*> Element::getChildren() const {
 	return this->children;
 }
 
@@ -25,8 +28,12 @@ string Element::getContent() const {
 	return this->content;
 }
 
-bool Element::isTagSelfClosed() const {
-	return this->isSelfClosed;
+bool Element::isSelfClosed() const {
+	return this->isTagSelfClosed;
+}
+
+bool Element::isClosed() const {
+	return this->isTagSelfClosed || this->isElementClosed;
 }
 
 void Element::setId(const string& id) {
@@ -41,15 +48,19 @@ void Element::setContent(const string& content) {
 	this->content = content;
 }
 
-void Element::setIsTagSelfClosed(bool isTagSelfClosed) {
-	this->isSelfClosed = isTagSelfClosed;
+void Element::setIsSelfClosed(bool isTagSelfClosed) {
+	this->isTagSelfClosed = isTagSelfClosed;
+}
+
+void Element::setIsClosed(bool isClosed) {
+	this->isElementClosed = isClosed;
 }
 
 void Element::addAttribute(const Attribute& attr) {
 	this->attributes.push_back(attr);
 }
 
-void Element::addChildElement(const Element& element) {
+void Element::addChildElement(Element*& element) {
 	this->children.push_back(element);
 }
 
@@ -65,7 +76,7 @@ ostream& operator<<(ostream& output, const Element& element) {
 		output << currentAttr.getName() << "=\"" << currentAttr.getValue() << "\" ";
 	}
 
-	if (element.isTagSelfClosed())
+	if (element.isTagSelfClosed)
 	{
 		output << "/>" << endl;
 		return output;

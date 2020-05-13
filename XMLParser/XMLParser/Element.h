@@ -7,28 +7,32 @@ private:
 	string id;
 	string tag;
 	vector<Attribute> attributes;
-	vector<Element> children;
+	vector<Element*> children;
 	string content;
-	bool isSelfClosed;
+	bool isTagSelfClosed;
+	bool isElementClosed;
 
 public:
 	Element();
-	Element(const string& tag, bool isTagSelfClosed = false);
+	Element(const string& tag, bool isSelfClosed = false);
+	Element(const Element& other);
 
 	string getId() const;
 	string getTag() const;
 	vector<Attribute> getAttributes() const;
-	vector<Element> getChildren() const;
+	vector<Element*> getChildren() const;
 	string getContent() const;
-	bool isTagSelfClosed() const;
+	bool isSelfClosed() const;
+	bool isClosed() const;
 
 	void setId(const string& id);
 	void setTag(const string& tag);
 	void setContent(const string& content);
-	void setIsTagSelfClosed(bool isTagSelfClosed);
+	void setIsSelfClosed(bool isSelfClosed);
+	void setIsClosed(bool isClosed);
 
 	void addAttribute(const Attribute& attr);
-	void addChildElement(const Element& element);
+	void addChildElement(Element*& element);
 
 	friend ostream& operator<<(ostream& output, const Element& element);
 };
