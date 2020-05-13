@@ -10,6 +10,7 @@ private:
 
 	void copyObj(const Input& other);
 	void getWord(int startIndex, int endIndex);
+
 public:
 	Input();
 	Input(const string& data);
