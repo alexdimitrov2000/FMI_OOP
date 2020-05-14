@@ -50,6 +50,10 @@ void Element::addContent(const string& content, bool trunc) {
 		return;
 	}
 
+	if (this->content != "") {
+		this->content += '\n';
+	}
+
 	this->content += content;
 }
 
@@ -70,31 +74,22 @@ void Element::addChildElement(Element*& element) {
 }
 
 ostream& operator<<(ostream& output, const Element& element) {
-	output << '<' << element.tag << ' ';
-	int attrsCnt = element.attributes.size();
-	int childrenCnt = element.children.size();
+	output << '<' << element.tag;
 
-	Attribute currentAttr;
-	for (size_t i = 0; i < attrsCnt; i++)
-	{
-		currentAttr = element.attributes[i];
-		output << currentAttr.getName() << "=\"" << currentAttr.getValue() << "\" ";
+	for (Attribute attr : element.attributes) {
+		output << " " << attr.getName() << "=\"" << attr.getValue() << '"';
 	}
 
 	if (element.isTagSelfClosed)
 	{
-		output << "/>" << endl;
+		output << " />" << endl;
 		return output;
 	}
 
 	output << '>' << endl;
 
-	if (childrenCnt != 0)
-	{
-		for (size_t i = 0; i < childrenCnt; i++)
-		{
-			output << element.children[i];
-		}
+	for (Element* child : element.children) {
+		output << (*child);
 	}
 
 	if (element.content != "")
