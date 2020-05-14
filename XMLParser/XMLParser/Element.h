@@ -27,7 +27,7 @@ public:
 
 	void setId(const string& id);
 	void setTag(const string& tag);
-	void setContent(const string& content);
+	void addContent(const string& content, bool trunc = false);
 	void setIsSelfClosed(bool isSelfClosed);
 	void setIsClosed(bool isClosed);
 

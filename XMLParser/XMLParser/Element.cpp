@@ -5,7 +5,7 @@ Element::Element() : id(), tag(), attributes(), children(), content(), isTagSelf
 
 Element::Element(const string& tag, bool isSelfClosed) : id(), tag(tag), attributes(), children(), content(), isTagSelfClosed(isSelfClosed), isElementClosed(false) {}
 
-Element::Element(const Element& other) : id(other.id), tag(other.tag), attributes(other.attributes), 
+Element::Element(const Element& other) : id(other.id), tag(other.tag), attributes(other.attributes),
 										 children(other.children), content(other.content), isTagSelfClosed(other.isTagSelfClosed), isElementClosed(other.isElementClosed) {}
 
 string Element::getId() const {
@@ -44,8 +44,13 @@ void Element::setTag(const string& tag) {
 	this->tag = tag;
 }
 
-void Element::setContent(const string& content) {
-	this->content = content;
+void Element::addContent(const string& content, bool trunc) {
+	if (trunc) {
+		this->content = content;
+		return;
+	}
+
+	this->content += content;
 }
 
 void Element::setIsSelfClosed(bool isTagSelfClosed) {
