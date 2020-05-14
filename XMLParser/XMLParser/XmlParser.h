@@ -6,7 +6,7 @@
 
 class XmlParser {
 private:
-	vector<Element*> elements;
+	Element* rootElement;
 	vector<Element*> openedElements;
 
 	Element* constructElement(const string& line);
@@ -16,7 +16,7 @@ public:
 	void parse(const vector<string>& fileContent);
 };
 
-XmlParser::XmlParser() : elements() {}
+XmlParser::XmlParser() : rootElement() {}
 
 Element* XmlParser::constructElement(const string& line) {
 	Element element;
@@ -86,13 +86,15 @@ void XmlParser::parse(const vector<string>& fileContent) {
 			this->openedElements.back()->addChildElement(element);
 		}
 		else {
-			this->elements.push_back(element);
+			this->rootElement = element;
 		}
 
 		if (!element->isSelfClosed() && !element->isClosed()) {
 			this->openedElements.push_back(element);
 		}
 
-		cout << currentLine << endl;
+		//cout << currentLine << endl;
 	}
+
+	cout << (*this->rootElement) << endl;
 }
