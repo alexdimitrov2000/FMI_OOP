@@ -18,16 +18,6 @@ public:
 
 XmlParser::XmlParser() : elements() {}
 
-string trim(const string& line) {
-	regex rgx("^\s*(.+)");
-	smatch match;
-	if (regex_search(line, match, rgx)) {
-		return match[1];
-	}
-
-	return line;
-}
-
 Element* XmlParser::constructElement(const string& line) {
 	Element element;
 	regex tagNameRgx("<([\/a-zA-Z-_]+).*>");
@@ -35,14 +25,21 @@ Element* XmlParser::constructElement(const string& line) {
 	regex closingTagRgx(".+<\/([a-zA-Z-_]+)>");
 	regex selfClosingTagRgx(".*\/>");
 	regex contentRgx(">(.*)<\/");
+	regex isContentLine("[^<>]+");
 	smatch match;
+
+	if (regex_match(line, isContentLine)) {
+		this->openedElements.back()->addContent(line);
+
+		return nullptr;
+	}
 
 	if (regex_search(line, match, tagNameRgx)) {
 		element.setTag(match[1]);
 
 		if (element.getTag()[0] == '/') {
-			element.setIsClosed(true);
-			return new Element(element);
+			this->openedElements.back()->setIsClosed(true);
+			return this->openedElements.back();
 		}
 	}
 
@@ -55,7 +52,7 @@ Element* XmlParser::constructElement(const string& line) {
 	}
 
 	if (regex_search(line, match, contentRgx)) {
-		element.setContent(match[1]);
+		element.addContent(match[1]);
 	}
 
 	if (regex_match(line, closingTagRgx)) {
@@ -70,29 +67,32 @@ Element* XmlParser::constructElement(const string& line) {
 
 void XmlParser::parse(const vector<string>& fileContent) {
 	string currentLine;
-	int linesCnt = fileContent.size();
+	size_t linesCnt = fileContent.size();
 
 	for (size_t i = 0; i < linesCnt; i++)
 	{
-		currentLine = trim(fileContent[i]);
+		currentLine = StringHelper::trim(fileContent[i]);
 		Element* element = this->constructElement(currentLine);
 
-		if (this->openedElements.size() != 0) {
-			(*this->openedElements.back()).addChildElement(element);
+		if (element == nullptr) {
+			continue;
+		}
+		else if (this->openedElements.size() > 0 && element == this->openedElements.back()) {
+			this->openedElements.pop_back();
+			continue;
+		}
+
+		if (this->openedElements.size() > 0) {
+			this->openedElements.back()->addChildElement(element);
 		}
 		else {
 			this->elements.push_back(element);
 		}
 
-		if (!(*element).isSelfClosed() && !(*element).isClosed()) {
+		if (!element->isSelfClosed() && !element->isClosed()) {
 			this->openedElements.push_back(element);
-		}
-		else if ((*element).isClosed() && (*element).getId() == (*this->openedElements.back()).getId()) {
-			this->openedElements.pop_back();
 		}
 
 		cout << currentLine << endl;
 	}
-	cout << this->elements[1] << endl;
-	cout << this->elements[3] << endl;
 }
