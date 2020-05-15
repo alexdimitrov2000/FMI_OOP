@@ -7,22 +7,37 @@
 class XmlParser {
 private:
 	Element* rootElement;
+	vector<Element*> elements;
 	vector<Element*> openedElements;
 	vector<string> ids;
 
 	Element* constructElement(const string& line);
 	string generateId(const string& id);
 	int getNumberOfElementsWithId(const string& currentId);
+	Element* getElementById(const string& id);
 public:
 	XmlParser();
 
 	void parse(const vector<string>& fileContent);
+	void print();
+	void selectElementAttr(const string& id, const string& key);
+	void setElementAttrValue(const string& id, const string& key, const string& value);
 };
 
-XmlParser::XmlParser() : rootElement() {}
+XmlParser::XmlParser() : rootElement(), elements(), openedElements(), ids() {}
 
 int XmlParser::getNumberOfElementsWithId(const string& id) {
-	return count_if(this->ids.begin(), this->ids.end(), [id](string e) { return e == id; });
+	return count_if(this->ids.begin(), this->ids.end(), [id](string i) { return i == id; });
+}
+
+Element* XmlParser::getElementById(const string& id) {
+	if (this->getNumberOfElementsWithId(id) == 0) {
+		return nullptr;
+	}
+
+	vector<Element*>::iterator element = find_if(this->elements.begin(), this->elements.end(), [id](Element* e) {return e->getId() == id; });
+
+	return *element;
 }
 
 string XmlParser::generateId(const string& currentId) {
@@ -137,8 +152,45 @@ void XmlParser::parse(const vector<string>& fileContent) {
 			this->openedElements.push_back(element);
 		}
 
-		//cout << currentLine << endl;
+		this->elements.push_back(element);
+	}
+}
+
+void XmlParser::print() {
+	cout << (*this->rootElement);
+}
+
+void XmlParser::selectElementAttr(const string& id, const string& key) {
+	Element* element = this->getElementById(id);
+
+	if (element == nullptr) {
+		cout << "There is no element with such ID" << endl;
+		return;
 	}
 
-	cout << (*this->rootElement) << endl;
+	if (!element->hasAttribute(key)) {
+		cout << "There is no such attribute" << endl;
+		return;
+	}
+
+	Attribute& attr = element->getAttributeByKey(key);
+
+	cout << attr.getValue() << endl;
+}
+
+void XmlParser::setElementAttrValue(const string& id, const string& key, const string& value) {
+	Element* element = this->getElementById(id);
+
+	if (element == nullptr) {
+		cout << "There is no element with such ID" << endl;
+		return;
+	}
+
+	if (!element->hasAttribute(key)) {
+		Attribute attr(key, value);
+		element->addAttribute(attr);
+		return;
+	}
+
+	element->getAttributeByKey(key).setValue(value);
 }
