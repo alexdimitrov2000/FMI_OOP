@@ -26,7 +26,7 @@ int main()
 	string userInput;
 	cout << USER_INPUT_MESSAGE;
 	getline(cin, userInput);
-	
+
 	Input input;
 	FileManager fileManager;
 	XmlParser parser;
