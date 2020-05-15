@@ -8,8 +8,11 @@ class XmlParser {
 private:
 	Element* rootElement;
 	vector<Element*> openedElements;
+	vector<string> ids;
 
 	Element* constructElement(const string& line);
+	string generateId(const string& id);
+	int getNumberOfElementsWithId(const string& currentId);
 public:
 	XmlParser();
 
@@ -18,8 +21,34 @@ public:
 
 XmlParser::XmlParser() : rootElement() {}
 
+int XmlParser::getNumberOfElementsWithId(const string& id) {
+	return count_if(this->ids.begin(), this->ids.end(), [id](string e) { return e == id; });
+}
+
+string XmlParser::generateId(const string& currentId) {
+	string id = currentId;
+	smatch match;
+	regex idRegex("(\\d+)_?\\d*");
+
+	if (id == "" && this->ids.empty()) {
+		id = "1";
+	}
+	else if (id == "" && regex_search(this->ids.back(), match, idRegex)) {
+		id = to_string(StringHelper::convertToInt(match[1]) + 1);
+	}
+
+	int elementsWithIdCnt = this->getNumberOfElementsWithId(id);
+
+	if (elementsWithIdCnt > 0) {
+		id += ("_" + to_string(elementsWithIdCnt));
+	}
+
+	return id;
+}
+
 Element* XmlParser::constructElement(const string& line) {
 	Element element;
+	string elementId;
 	regex tagNameRgx("<([\/a-zA-Z-_]+).*>");
 	regex attributeRgx("([a-zA-Z-_]+)=\"([a-zA-Z0-9 .]+)\"");
 	regex closingTagRgx(".+<\/([a-zA-Z-_]+)>");
@@ -45,10 +74,23 @@ Element* XmlParser::constructElement(const string& line) {
 
 	string::const_iterator iterator = line.cbegin();
 	while (regex_search(iterator, line.cend(), match, attributeRgx)) {
-		Attribute attr(match[1], match[2]);
-		element.addAttribute(attr);
+		if (match[1] == "id") {
+			elementId = this->generateId(match[2]);
+			
+			element.setId(elementId);
+		}
+		else {
+			Attribute attr(match[1], match[2]);
+			element.addAttribute(attr);
+		}
 
 		iterator = match.suffix().first;
+	}
+
+	if (elementId == "") {
+		elementId = this->generateId(elementId);
+
+		element.setId(elementId);
 	}
 
 	if (regex_search(line, match, contentRgx)) {
@@ -61,6 +103,8 @@ Element* XmlParser::constructElement(const string& line) {
 	else if (regex_match(line, selfClosingTagRgx)) {
 		element.setIsSelfClosed(true);
 	}
+
+	this->ids.push_back(elementId);
 
 	return new Element(element);
 }
