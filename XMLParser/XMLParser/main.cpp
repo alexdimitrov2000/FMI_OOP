@@ -14,6 +14,7 @@ const char SAVE_AS_COMMAND[] = "saveAs";
 const char CLOSE_COMMAND[] = "close";
 const char HELP_COMMAND[] = "help";
 const char EXIT_COMMAND[] = "exit";
+const char OPERATIONS_COMMAND[] = "operations";
 const char PRINT_COMMAND[] = "print";
 const char SELECT_COMMAND[] = "select";
 const char SET_COMMAND[] = "set";
@@ -27,6 +28,10 @@ const char XPATH_COMMAND[] = "xpath";
 // Command Messages
 const char UNOPENED_FILE_MESSAGE[] = "There is no file opened. You have to open a file at first.";
 const char INVALID_COMMAND_MESSAGE[] = "Invalid command.";
+//const char OPERATIONS_INFO_MESSAGE[] = "print -> outputs the information read from the file\n"
+//									   "select <id> <key> -> outputs the value of the attribute with <key> of the element with <id>\n"
+//									   "set <id> <key> <value> -> sets <value> to the attribute with <key> of the element with <id>\n"
+//									   "children <id> -> gets list with attributes of the element with <id> children\n";
 
 int main()
 {
@@ -68,6 +73,9 @@ int main()
 		else if (command == CLOSE_COMMAND) {
 			fileManager.close();
 		}
+		else if (command == OPERATIONS_COMMAND) {
+			
+		}
 		else if (command == PRINT_COMMAND) {
 			parser.print();
 		}
@@ -88,7 +96,14 @@ int main()
 
 		}
 		else if (command == CHILD_COMMAND) {
+			string id = tokens[1];
+			string childIndex = tokens[2];
 
+			Element* nthChild = parser.getNthChild(id, childIndex);
+
+			if (nthChild != nullptr) {
+				cout << (*nthChild) << endl;
+			}
 		}
 		else if (command == TEXT_COMMAND) {
 

@@ -15,6 +15,7 @@ const string HELP_MESSAGE = "The following commands are supported:\n"
 							"saveAs <file>	saves the currently open file in <file>\n"
 							"help		prints this information\n"
 							"exit		exits the program";
+//const string OPERATIONS_MESSAGE = "You can type 'operations' to check what you can perform on the XML file elements.";
 
 FileManager::FileManager() : lines(), filePath(), isOpened() {}
 
@@ -50,6 +51,7 @@ void FileManager::open(const string& filePath) {
 	}
 
 	cout << OPEN_SUCCESS << filePath << endl;
+	//cout << OPERATIONS_MESSAGE << endl;
 }
 
 void FileManager::save() {

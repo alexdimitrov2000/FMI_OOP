@@ -4,6 +4,10 @@
 #include "Element.h"
 #include "StringHelper.h"
 
+const char NO_ELEMENT_WITH_SUCH_ID_MESSAGE[] = "There is no element with such ID";
+const char ATTR_NOT_FOUND_MESSAGE[] = "There is no such attribute";
+const char CHILD_AT_INDEX_NOT_FOUND_MESSAGE[] = "Child at this index was not found.";
+
 class XmlParser {
 private:
 	Element* rootElement;
@@ -22,6 +26,7 @@ public:
 	void print();
 	void selectElementAttr(const string& id, const string& key);
 	void setElementAttrValue(const string& id, const string& key, const string& value);
+	Element* getNthChild(const string& id, const string& n);
 };
 
 XmlParser::XmlParser() : rootElement(), elements(), openedElements(), ids() {}
@@ -164,12 +169,12 @@ void XmlParser::selectElementAttr(const string& id, const string& key) {
 	Element* element = this->getElementById(id);
 
 	if (element == nullptr) {
-		cout << "There is no element with such ID" << endl;
+		cout << NO_ELEMENT_WITH_SUCH_ID_MESSAGE << endl;
 		return;
 	}
 
 	if (!element->hasAttribute(key)) {
-		cout << "There is no such attribute" << endl;
+		cout << ATTR_NOT_FOUND_MESSAGE << endl;
 		return;
 	}
 
@@ -182,7 +187,7 @@ void XmlParser::setElementAttrValue(const string& id, const string& key, const s
 	Element* element = this->getElementById(id);
 
 	if (element == nullptr) {
-		cout << "There is no element with such ID" << endl;
+		cout << NO_ELEMENT_WITH_SUCH_ID_MESSAGE << endl;
 		return;
 	}
 
@@ -193,4 +198,23 @@ void XmlParser::setElementAttrValue(const string& id, const string& key, const s
 	}
 
 	element->getAttributeByKey(key).setValue(value);
+}
+
+Element* XmlParser::getNthChild(const string& id, const string& n) {
+	Element* element = this->getElementById(id);
+
+	if (element == nullptr) {
+		cout << NO_ELEMENT_WITH_SUCH_ID_MESSAGE << endl;
+		return nullptr;
+	}
+
+	int index = StringHelper::convertToInt(n);
+	vector<Element*> children = element->getChildren();
+
+	if (index < 0 || index >= children.size()) {
+		cout << CHILD_AT_INDEX_NOT_FOUND_MESSAGE << endl;
+		return nullptr;
+	}
+
+	return children[index];
 }
