@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include "FileManager.h"
-#include "Input.h"
 #include "XmlParser.h"
 
 const char WELCOME_MESSAGE[] = "Welcome to our 'XML Parser' application! \nYou can enter 'help' for commands info.\n";
@@ -15,6 +14,15 @@ const char SAVE_AS_COMMAND[] = "saveAs";
 const char CLOSE_COMMAND[] = "close";
 const char HELP_COMMAND[] = "help";
 const char EXIT_COMMAND[] = "exit";
+const char PRINT_COMMAND[] = "print";
+const char SELECT_COMMAND[] = "select";
+const char SET_COMMAND[] = "set";
+const char CHILDREN_COMMAND[] = "children";
+const char CHILD_COMMAND[] = "child";
+const char TEXT_COMMAND[] = "text";
+const char DELETE_COMMAND[] = "delete";
+const char NEWCHILD_COMMAND[] = "newchild";
+const char XPATH_COMMAND[] = "xpath";
 
 // Command Messages
 const char UNOPENED_FILE_MESSAGE[] = "There is no file opened. You have to open a file at first.";
@@ -27,18 +35,13 @@ int main()
 	cout << USER_INPUT_MESSAGE;
 	getline(cin, userInput);
 
-	Input input;
 	FileManager fileManager;
 	XmlParser parser;
 
 	while (userInput != EXIT_COMMAND)
 	{
-		input.setData(userInput);
-		input.split();
-
-		vector<string> tokens = input.getTokens();
+		vector<string> tokens = StringHelper::split(userInput);
 		string command = tokens[0];
-		size_t tokensCnt = tokens.size();
 
 		if (command == OPEN_COMMAND) {
 			string filePath = tokens[1];
@@ -65,12 +68,45 @@ int main()
 		else if (command == CLOSE_COMMAND) {
 			fileManager.close();
 		}
+		else if (command == PRINT_COMMAND) {
+			parser.print();
+		}
+		else if (command == SELECT_COMMAND) {
+			string id = tokens[1];
+			string key = tokens[2];
+
+			parser.selectElementAttr(id, key);
+		}
+		else if (command == SET_COMMAND) {
+			string id = tokens[1];
+			string key = tokens[2];
+			string value = tokens[3];
+
+			parser.setElementAttrValue(id, key, value);
+		}
+		else if (command == CHILDREN_COMMAND) {
+
+		}
+		else if (command == CHILD_COMMAND) {
+
+		}
+		else if (command == TEXT_COMMAND) {
+
+		}
+		else if (command == DELETE_COMMAND) {
+
+		}
+		else if (command == NEWCHILD_COMMAND) {
+
+		}
+		else if (command == XPATH_COMMAND) {
+
+		}
 		else {
 			cout << INVALID_COMMAND_MESSAGE << endl;
 		}
 
 		cout << USER_INPUT_MESSAGE;
-		input.clearData();
 		getline(cin, userInput);
 	}
 
