@@ -34,5 +34,8 @@ public:
 	void addAttribute(const Attribute& attr);
 	void addChildElement(Element*& element);
 
+	bool hasAttribute(const string& key);
+	Attribute& getAttributeByKey(const string& key);
+
 	friend ostream& operator<<(ostream& output, const Element& element);
 };

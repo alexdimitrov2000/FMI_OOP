@@ -1,4 +1,5 @@
 #include <ostream>
+#include <algorithm>
 #include "Element.h"
 
 Element::Element() : id(), tag(), attributes(), children(), content(), isTagSelfClosed(false), isElementClosed(false) {}
@@ -102,4 +103,14 @@ ostream& operator<<(ostream& output, const Element& element) {
 	output << "</" << element.tag << '>' << endl;
 
 	return output;
+}
+
+bool Element::hasAttribute(const string& key) {
+	return count_if(this->attributes.begin(), this->attributes.end(), [key](Attribute a) {return a.getName() == key; }) == 1;
+}
+
+Attribute& Element::getAttributeByKey(const string& key) {
+	vector<Attribute>::iterator attr = find_if(this->attributes.begin(), this->attributes.end(), [key](Attribute a) {return a.getName() == key; });
+
+	return *attr;
 }
