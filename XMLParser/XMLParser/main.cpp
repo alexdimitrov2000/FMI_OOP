@@ -106,7 +106,11 @@ int main()
 			}
 		}
 		else if (command == TEXT_COMMAND) {
+			string id = tokens[1];
 
+			string elementContent = parser.getContent(id);
+
+			cout << elementContent << endl;
 		}
 		else if (command == DELETE_COMMAND) {
 

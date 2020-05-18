@@ -27,6 +27,7 @@ public:
 	void selectElementAttr(const string& id, const string& key);
 	void setElementAttrValue(const string& id, const string& key, const string& value);
 	Element* getNthChild(const string& id, const string& n);
+	string getContent(const string& id);
 };
 
 XmlParser::XmlParser() : rootElement(), elements(), openedElements(), ids() {}
@@ -217,4 +218,10 @@ Element* XmlParser::getNthChild(const string& id, const string& n) {
 	}
 
 	return children[index];
+}
+
+string XmlParser::getContent(const string& id) {
+	Element* element = this->getElementById(id);
+
+	return element->getContent();
 }
