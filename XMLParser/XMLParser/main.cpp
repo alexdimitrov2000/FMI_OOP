@@ -113,7 +113,10 @@ int main()
 			cout << elementContent << endl;
 		}
 		else if (command == DELETE_COMMAND) {
+			string id = tokens[1];
+			string key = tokens[2];
 
+			parser.deleteElementAttr(id, key);
 		}
 		else if (command == NEWCHILD_COMMAND) {
 

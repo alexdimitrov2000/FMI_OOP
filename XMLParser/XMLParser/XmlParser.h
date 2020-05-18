@@ -4,10 +4,13 @@
 #include "Element.h"
 #include "StringHelper.h"
 
-const char NO_ELEMENT_WITH_SUCH_ID_MESSAGE[] = "There is no element with such ID";
-const char ATTR_NOT_FOUND_MESSAGE[] = "There is no such attribute";
+// Operation messages
+const char NO_ELEMENT_WITH_SUCH_ID_MESSAGE[] = "There is no element with such ID.";
+const char ATTR_NOT_FOUND_MESSAGE[] = "There is no such attribute.";
 const char CHILD_AT_INDEX_NOT_FOUND_MESSAGE[] = "Child at this index was not found.";
-const char ATTRIBUTE_VALUE_SET_MESSAGE[] = "Attribute value was set.";
+const char ATTR_VALUE_SET_MESSAGE[] = "Attribute value was set.";
+const char DELETE_ATTR_SUCCESS_MESSAGE[] = "Attribute was deleted successfully.";
+const char ID_ATTR_CANNOT_BE_DELETED_MESSAGE[] = "You cannot delete the ID attribute.";
 
 class XmlParser {
 private:
@@ -197,12 +200,12 @@ void XmlParser::setElementAttrValue(const string& id, const string& key, const s
 	if (!element->hasAttribute(key)) {
 		Attribute attr(key, value);
 		element->addAttribute(attr);
-		cout << ATTRIBUTE_VALUE_SET_MESSAGE << endl;
+		cout << ATTR_VALUE_SET_MESSAGE << endl;
 		return;
 	}
 
 	element->getAttributeByKey(key)->setValue(value);
-	cout << ATTRIBUTE_VALUE_SET_MESSAGE << endl;
+	cout << ATTR_VALUE_SET_MESSAGE << endl;
 }
 
 Element* XmlParser::getNthChild(const string& id, const string& n) {
@@ -238,7 +241,16 @@ void XmlParser::deleteElementAttr(const string& id, const string& key) {
 		return;
 	}
 
-	if (element->hasAttribute(key)) {
-
+	if (key == "id") {
+		cout << ID_ATTR_CANNOT_BE_DELETED_MESSAGE << endl;
+		return;
 	}
+	else if (!element->hasAttribute(key)) {
+		cout << ATTR_NOT_FOUND_MESSAGE << endl;
+		return;
+	}
+
+	element->deleteAttributeByKey(key);
+
+	cout << DELETE_ATTR_SUCCESS_MESSAGE << endl;
 }
