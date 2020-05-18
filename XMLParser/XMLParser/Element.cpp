@@ -114,3 +114,10 @@ Attribute* Element::getAttributeByKey(const string& key) {
 
 	return *attr;
 }
+
+void Element::deleteAttributeByKey(const string& key) {
+	vector<Attribute*>::iterator attr = find_if(this->attributes.begin(), this->attributes.end(), [key](Attribute* a) {return a->getName() == key; });
+	
+	delete (*attr);
+	this->attributes.erase(attr);
+}

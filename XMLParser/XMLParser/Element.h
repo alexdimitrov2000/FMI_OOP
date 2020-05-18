@@ -36,6 +36,7 @@ public:
 
 	bool hasAttribute(const string& key);
 	Attribute* getAttributeByKey(const string& key);
+	void deleteAttributeByKey(const string& key);
 
 	friend ostream& operator<<(ostream& output, const Element& element);
 };
