@@ -9,6 +9,20 @@ Element::Element(const string& tag, bool isSelfClosed) : id(), tag(tag), attribu
 Element::Element(const Element& other) : id(other.id), tag(other.tag), attributes(other.attributes),
 										 children(other.children), content(other.content), isTagSelfClosed(other.isTagSelfClosed), isElementClosed(other.isElementClosed) {}
 
+Element& Element::operator=(const Element& other) {
+	if (this != &other) {
+		this->id = other.id;
+		this->tag = other.tag;
+		this->attributes = other.attributes;
+		this->children = other.children;
+		this->content = other.content;
+		this->isTagSelfClosed = other.isTagSelfClosed;
+		this->isElementClosed = other.isElementClosed;
+	}
+
+	return *this;
+}
+
 string Element::getId() const {
 	return this->id;
 }
