@@ -11,6 +11,7 @@ const char CHILD_AT_INDEX_NOT_FOUND_MESSAGE[] = "Child at this index was not fou
 const char ATTR_VALUE_SET_MESSAGE[] = "Attribute value was set.";
 const char DELETE_ATTR_SUCCESS_MESSAGE[] = "Attribute was deleted successfully.";
 const char ID_ATTR_CANNOT_BE_DELETED_MESSAGE[] = "You cannot delete the ID attribute.";
+const char CHILD_ADDED_MESSAGE[] = "The child was added.";
 
 class XmlParser {
 private:
@@ -20,7 +21,7 @@ private:
 	vector<string> ids;
 
 	Element* constructElement(const string& line);
-	string generateId(const string& id);
+	string generateId(const string& id = "");
 	int getNumberOfElementsWithId(const string& currentId);
 	Element* getElementById(const string& id);
 public:
@@ -35,6 +36,7 @@ public:
 	Element* getNthChild(const string& id, const string& n);
 	string getContent(const string& id);
 	void deleteElementAttr(const string& id, const string& key);
+	void addChildToElement(const string& id, const string& childTag);
 };
 
 XmlParser::XmlParser() : rootElement(), elements(), openedElements(), ids() {}
@@ -117,7 +119,7 @@ Element* XmlParser::constructElement(const string& line) {
 	}
 
 	if (elementId == "") {
-		elementId = this->generateId(elementId);
+		elementId = this->generateId();
 
 		element.setId(elementId);
 	}
@@ -260,4 +262,25 @@ void XmlParser::deleteElementAttr(const string& id, const string& key) {
 	element->deleteAttributeByKey(key);
 
 	cout << DELETE_ATTR_SUCCESS_MESSAGE << endl;
+}
+
+void XmlParser::addChildToElement(const string& id, const string& childTag) {
+	Element* element = this->getElementById(id);
+
+	if (element == nullptr)
+	{
+		cout << NO_ELEMENT_WITH_SUCH_ID_MESSAGE << endl;
+		return;
+	}
+
+	Element* child = new Element(childTag);
+	string childId = this->generateId();
+	child->setId(childId);
+
+	element->addChildElement(child);
+	
+	this->elements.push_back(child);
+	this->ids.push_back(childId);
+
+	cout << CHILD_ADDED_MESSAGE << endl;
 }
