@@ -7,6 +7,7 @@
 const char NO_ELEMENT_WITH_SUCH_ID_MESSAGE[] = "There is no element with such ID";
 const char ATTR_NOT_FOUND_MESSAGE[] = "There is no such attribute";
 const char CHILD_AT_INDEX_NOT_FOUND_MESSAGE[] = "Child at this index was not found.";
+const char ATTRIBUTE_VALUE_SET_MESSAGE[] = "Attribute value was set.";
 
 class XmlParser {
 private:
@@ -28,6 +29,7 @@ public:
 	void setElementAttrValue(const string& id, const string& key, const string& value);
 	Element* getNthChild(const string& id, const string& n);
 	string getContent(const string& id);
+	void deleteElementAttr(const string& id, const string& key);
 };
 
 XmlParser::XmlParser() : rootElement(), elements(), openedElements(), ids() {}
@@ -179,9 +181,9 @@ void XmlParser::selectElementAttr(const string& id, const string& key) {
 		return;
 	}
 
-	Attribute& attr = element->getAttributeByKey(key);
+	Attribute* attr = element->getAttributeByKey(key);
 
-	cout << attr.getValue() << endl;
+	cout << attr->getValue() << endl;
 }
 
 void XmlParser::setElementAttrValue(const string& id, const string& key, const string& value) {
@@ -195,10 +197,12 @@ void XmlParser::setElementAttrValue(const string& id, const string& key, const s
 	if (!element->hasAttribute(key)) {
 		Attribute attr(key, value);
 		element->addAttribute(attr);
+		cout << ATTRIBUTE_VALUE_SET_MESSAGE << endl;
 		return;
 	}
 
-	element->getAttributeByKey(key).setValue(value);
+	element->getAttributeByKey(key)->setValue(value);
+	cout << ATTRIBUTE_VALUE_SET_MESSAGE << endl;
 }
 
 Element* XmlParser::getNthChild(const string& id, const string& n) {
@@ -224,4 +228,17 @@ string XmlParser::getContent(const string& id) {
 	Element* element = this->getElementById(id);
 
 	return element->getContent();
+}
+
+void XmlParser::deleteElementAttr(const string& id, const string& key) {
+	Element* element = this->getElementById(id);
+
+	if (element == nullptr) {
+		cout << NO_ELEMENT_WITH_SUCH_ID_MESSAGE << endl;
+		return;
+	}
+
+	if (element->hasAttribute(key)) {
+
+	}
 }

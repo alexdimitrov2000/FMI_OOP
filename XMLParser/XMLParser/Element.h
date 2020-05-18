@@ -6,7 +6,7 @@ class Element {
 private:
 	string id;
 	string tag;
-	vector<Attribute> attributes;
+	vector<Attribute*> attributes;
 	vector<Element*> children;
 	string content;
 	bool isTagSelfClosed;
@@ -19,7 +19,7 @@ public:
 
 	string getId() const;
 	string getTag() const;
-	vector<Attribute> getAttributes() const;
+	vector<Attribute*> getAttributes() const;
 	vector<Element*> getChildren() const;
 	string getContent() const;
 	bool isSelfClosed() const;
@@ -35,7 +35,7 @@ public:
 	void addChildElement(Element*& element);
 
 	bool hasAttribute(const string& key);
-	Attribute& getAttributeByKey(const string& key);
+	Attribute* getAttributeByKey(const string& key);
 
 	friend ostream& operator<<(ostream& output, const Element& element);
 };

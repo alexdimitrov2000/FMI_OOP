@@ -17,7 +17,7 @@ string Element::getTag() const {
 	return this->tag;
 }
 
-vector<Attribute> Element::getAttributes() const {
+vector<Attribute*> Element::getAttributes() const {
 	return this->attributes;
 }
 
@@ -67,7 +67,7 @@ void Element::setIsClosed(bool isClosed) {
 }
 
 void Element::addAttribute(const Attribute& attr) {
-	this->attributes.push_back(attr);
+	this->attributes.push_back(new Attribute(attr));
 }
 
 void Element::addChildElement(Element*& element) {
@@ -79,8 +79,8 @@ ostream& operator<<(ostream& output, const Element& element) {
 
 	output << " id=\"" << element.getId() << '"';
 
-	for (Attribute attr : element.attributes) {
-		output << " " << attr.getName() << "=\"" << attr.getValue() << '"';
+	for (Attribute* attr : element.attributes) {
+		output << " " << attr->getName() << "=\"" << attr->getValue() << '"';
 	}
 
 	if (element.isTagSelfClosed)
@@ -106,11 +106,11 @@ ostream& operator<<(ostream& output, const Element& element) {
 }
 
 bool Element::hasAttribute(const string& key) {
-	return count_if(this->attributes.begin(), this->attributes.end(), [key](Attribute a) {return a.getName() == key; }) == 1;
+	return count_if(this->attributes.begin(), this->attributes.end(), [key](Attribute* a) {return a->getName() == key; }) == 1;
 }
 
-Attribute& Element::getAttributeByKey(const string& key) {
-	vector<Attribute>::iterator attr = find_if(this->attributes.begin(), this->attributes.end(), [key](Attribute a) {return a.getName() == key; });
+Attribute* Element::getAttributeByKey(const string& key) {
+	vector<Attribute*>::iterator attr = find_if(this->attributes.begin(), this->attributes.end(), [key](Attribute* a) {return a->getName() == key; });
 
 	return *attr;
 }
