@@ -56,6 +56,8 @@ int main()
 
 			if (!fileManager.isFileOpened())
 				fileManager.isFileOpened(true);
+
+			fileManager.setRootElement(parser.getRootElement());
 		}
 		else if (command == HELP_COMMAND) {
 			fileManager.help();

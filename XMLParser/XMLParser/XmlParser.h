@@ -26,6 +26,8 @@ private:
 public:
 	XmlParser();
 
+	Element* getRootElement();
+
 	void parse(const vector<string>& fileContent);
 	void print();
 	void selectElementAttr(const string& id, const string& key);
@@ -36,6 +38,7 @@ public:
 };
 
 XmlParser::XmlParser() : rootElement(), elements(), openedElements(), ids() {}
+
 
 int XmlParser::getNumberOfElementsWithId(const string& id) {
 	return count_if(this->ids.begin(), this->ids.end(), [id](string i) { return i == id; });
@@ -133,6 +136,10 @@ Element* XmlParser::constructElement(const string& line) {
 	this->ids.push_back(elementId);
 
 	return new Element(element);
+}
+
+Element* XmlParser::getRootElement() {
+	return this->rootElement;
 }
 
 void XmlParser::parse(const vector<string>& fileContent) {
