@@ -19,5 +19,5 @@ public:
 	void setName(const string& name);
 	void setValue(const string& value);
 
-	//friend ostream& operator<<(ostream& output, const Attribute& attr);
+	friend ostream& operator<<(ostream& output, const Attribute& attr);
 };

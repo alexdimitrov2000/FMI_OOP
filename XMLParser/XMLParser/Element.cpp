@@ -80,7 +80,7 @@ ostream& operator<<(ostream& output, const Element& element) {
 	output << " id=\"" << element.getId() << '"';
 
 	for (Attribute* attr : element.attributes) {
-		output << " " << attr->getName() << "=\"" << attr->getValue() << '"';
+		output << (*attr);
 	}
 
 	if (element.isTagSelfClosed)

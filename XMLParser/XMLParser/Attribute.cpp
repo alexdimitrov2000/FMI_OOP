@@ -1,3 +1,4 @@
+#include <ostream>
 #include "Attribute.h"
 
 Attribute::Attribute() : name(), value() {}
@@ -32,6 +33,7 @@ void Attribute::setValue(const string& value) {
 	this->value = value;
 }
 
-//ostream& operator<<(ostream& output, const Attribute& attr) {
-//	return output;
-//}
+ostream& operator<<(ostream& output, const Attribute& attr) {
+	output << " " << attr.getName() << "=\"" << attr.getValue() << '"';
+	return output;
+}
