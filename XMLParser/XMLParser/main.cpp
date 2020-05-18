@@ -69,6 +69,7 @@ int main()
 		}
 		else if (command == CLOSE_COMMAND) {
 			fileManager.close();
+			parser.clearData();
 		}
 		else if (command == PRINT_COMMAND) {
 			parser.print();

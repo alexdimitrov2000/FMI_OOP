@@ -28,6 +28,7 @@ public:
 	XmlParser();
 
 	Element* getRootElement();
+	void clearData();
 
 	void parse(const vector<string>& fileContent);
 	void print();
@@ -144,6 +145,14 @@ Element* XmlParser::getRootElement() {
 	return this->rootElement;
 }
 
+void XmlParser::clearData() {
+	this->elements.clear();
+	this->ids.clear();
+	this->openedElements.clear();
+	delete this->rootElement;
+	this->rootElement = nullptr;
+}
+
 void XmlParser::parse(const vector<string>& fileContent) {
 	string currentLine;
 	size_t linesCnt = fileContent.size();
@@ -151,6 +160,11 @@ void XmlParser::parse(const vector<string>& fileContent) {
 	for (size_t i = 0; i < linesCnt; i++)
 	{
 		currentLine = StringHelper::trim(fileContent[i]);
+
+		if (currentLine == "") {
+			continue;
+		}
+
 		Element* element = this->constructElement(currentLine);
 
 		if (element == nullptr) {
@@ -164,7 +178,7 @@ void XmlParser::parse(const vector<string>& fileContent) {
 		if (this->openedElements.size() > 0) {
 			this->openedElements.back()->addChildElement(element);
 		}
-		else {
+		else if (this->rootElement == nullptr) {
 			this->rootElement = element;
 		}
 
