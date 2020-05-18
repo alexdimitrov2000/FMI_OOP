@@ -4,6 +4,8 @@ Attribute::Attribute() : name(), value() {}
 
 Attribute::Attribute(const string& name, const string& value) : name(name), value(value) {}
 
+Attribute::Attribute(const Attribute& other) : name(other.name), value(other.value) {}
+
 Attribute& Attribute::operator=(const Attribute& other) {
 	if (this != &other)
 	{

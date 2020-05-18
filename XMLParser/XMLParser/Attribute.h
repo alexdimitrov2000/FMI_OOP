@@ -10,6 +10,7 @@ private:
 public:
 	Attribute();
 	Attribute(const string& name, const string& value);
+	Attribute(const Attribute& other);
 	Attribute& operator=(const Attribute& other);
 
 	string getName() const;
