@@ -23,6 +23,22 @@ Element& Element::operator=(const Element& other) {
 	return *this;
 }
 
+Element::~Element() {
+	for (Attribute*& attr : this->attributes) {
+		delete attr;
+	}
+	this->attributes.clear();
+
+	for (Element*& child : this->children) {
+		delete child;
+	}
+	this->children.clear();
+
+	this->id.clear();
+	this->tag.clear();
+	this->content.clear();
+}
+
 string Element::getId() const {
 	return this->id;
 }

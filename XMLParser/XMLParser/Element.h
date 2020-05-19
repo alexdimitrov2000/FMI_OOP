@@ -17,6 +17,7 @@ public:
 	Element(const string& tag, bool isSelfClosed = false);
 	Element(const Element& other);
 	Element& operator=(const Element& other);
+	~Element();
 
 	string getId() const;
 	string getTag() const;

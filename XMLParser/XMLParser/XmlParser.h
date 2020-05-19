@@ -81,7 +81,7 @@ string XmlParser::generateId(const string& currentId) {
 }
 
 Element* XmlParser::constructElement(const string& line) {
-	Element element;
+	Element* element = new Element();
 	string elementId;
 	regex tagNameRgx("<([\/a-zA-Z-_]+).*>");
 	regex attributeRgx("([a-zA-Z-_]+)=\"([a-zA-Z0-9 .]+)\"");
@@ -98,9 +98,9 @@ Element* XmlParser::constructElement(const string& line) {
 	}
 
 	if (regex_search(line, match, tagNameRgx)) {
-		element.setTag(match[1]);
+		element->setTag(match[1]);
 
-		if (element.getTag()[0] == '/') {
+		if (element->getTag()[0] == '/') {
 			this->openedElements.back()->setIsClosed(true);
 			return this->openedElements.back();
 		}
@@ -111,11 +111,11 @@ Element* XmlParser::constructElement(const string& line) {
 		if (match[1] == "id") {
 			elementId = this->generateId(match[2]);
 			
-			element.setId(elementId);
+			element->setId(elementId);
 		}
 		else {
 			Attribute attr(match[1], match[2]);
-			element.addAttribute(attr);
+			element->addAttribute(attr);
 		}
 
 		iterator = match.suffix().first;
@@ -124,23 +124,23 @@ Element* XmlParser::constructElement(const string& line) {
 	if (elementId == "") {
 		elementId = this->generateId();
 
-		element.setId(elementId);
+		element->setId(elementId);
 	}
 
 	if (regex_search(line, match, contentRgx)) {
-		element.addContent(match[1]);
+		element->addContent(match[1]);
 	}
 
 	if (regex_match(line, closingTagRgx)) {
-		element.setIsClosed(true);
+		element->setIsClosed(true);
 	}
 	else if (regex_match(line, selfClosingTagRgx)) {
-		element.setIsSelfClosed(true);
+		element->setIsSelfClosed(true);
 	}
 
 	this->ids.push_back(elementId);
 
-	return new Element(element);
+	return element;
 }
 
 Element* XmlParser::getRootElement() {
