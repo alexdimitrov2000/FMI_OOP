@@ -88,7 +88,13 @@ int main()
 			parser.setElementAttrValue(id, key, value);
 		}
 		else if (command == CHILDREN_COMMAND) {
+			string id = tokens[1];
 
+			vector<Attribute*> childrenAttrs = parser.getChildrenAttributes(id);
+
+			for (Attribute*& attr : childrenAttrs) {
+				cout << (*attr) << endl;
+			}
 		}
 		else if (command == CHILD_COMMAND) {
 			string id = tokens[1];

@@ -7,6 +7,7 @@
 // Operation messages
 const char NO_ELEMENT_WITH_SUCH_ID_MESSAGE[] = "There is no element with such ID.";
 const char ATTR_NOT_FOUND_MESSAGE[] = "There is no such attribute.";
+const char NO_CHILD_ATTRS_MESSAGE[] = "Element's children have no attributes.";
 const char CHILD_AT_INDEX_NOT_FOUND_MESSAGE[] = "Child at this index was not found.";
 const char ATTR_VALUE_SET_MESSAGE[] = "Attribute value was set.";
 const char DELETE_ATTR_SUCCESS_MESSAGE[] = "Attribute was deleted successfully.";
@@ -34,6 +35,7 @@ public:
 	void print();
 	void selectElementAttr(const string& id, const string& key);
 	void setElementAttrValue(const string& id, const string& key, const string& value);
+	vector<Attribute*> getChildrenAttributes(const string& id);
 	Element* getNthChild(const string& id, const string& n);
 	string getContent(const string& id);
 	void deleteElementAttr(const string& id, const string& key);
@@ -229,6 +231,30 @@ void XmlParser::setElementAttrValue(const string& id, const string& key, const s
 
 	element->getAttributeByKey(key)->setValue(value);
 	cout << ATTR_VALUE_SET_MESSAGE << endl;
+}
+
+vector<Attribute*> XmlParser::getChildrenAttributes(const string& id) {
+	Element* element = this->getElementById(id);
+	vector<Attribute*> attrs;
+
+	if (element == nullptr) {
+		cout << NO_ELEMENT_WITH_SUCH_ID_MESSAGE << endl;
+		return attrs;
+	}
+
+	vector<Element*> children = element->getChildren();
+	
+	for (Element*& child : children) {
+		for (Attribute*& attr : child->getAttributes()) {
+			attrs.push_back(attr);
+		}
+	}
+
+	if (attrs.size() == 0) {
+		cout << NO_CHILD_ATTRS_MESSAGE << endl;
+	}
+
+	return attrs;
 }
 
 Element* XmlParser::getNthChild(const string& id, const string& n) {
