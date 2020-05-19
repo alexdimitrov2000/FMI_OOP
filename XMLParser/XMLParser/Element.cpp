@@ -96,8 +96,8 @@ void Element::setIsClosed(bool isClosed) {
 	this->isElementClosed = isClosed;
 }
 
-void Element::addAttribute(const Attribute& attr) {
-	this->attributes.push_back(new Attribute(attr));
+void Element::addAttribute(Attribute*& attr) {
+	this->attributes.push_back(attr);
 }
 
 void Element::addChildElement(Element*& element) {

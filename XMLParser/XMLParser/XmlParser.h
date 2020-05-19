@@ -114,7 +114,7 @@ Element* XmlParser::constructElement(const string& line) {
 			element->setId(elementId);
 		}
 		else {
-			Attribute attr(match[1], match[2]);
+			Attribute* attr = new Attribute(match[1], match[2]);
 			element->addAttribute(attr);
 		}
 
@@ -223,7 +223,7 @@ void XmlParser::setElementAttrValue(const string& id, const string& key, const s
 	}
 
 	if (!element->hasAttribute(key)) {
-		Attribute attr(key, value);
+		Attribute* attr = new Attribute(key, value);
 		element->addAttribute(attr);
 		cout << ATTR_VALUE_SET_MESSAGE << endl;
 		return;

@@ -33,7 +33,7 @@ public:
 	void setIsSelfClosed(bool isSelfClosed);
 	void setIsClosed(bool isClosed);
 
-	void addAttribute(const Attribute& attr);
+	void addAttribute(Attribute*& attr);
 	void addChildElement(Element*& element);
 
 	bool hasAttribute(const string& key);
