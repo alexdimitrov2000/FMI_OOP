@@ -14,6 +14,7 @@ const char ATTR_VALUE_SET_MESSAGE[] = "Attribute value was set.";
 const char DELETE_ATTR_SUCCESS_MESSAGE[] = "Attribute was deleted successfully.";
 const char ID_ATTR_CANNOT_BE_DELETED_MESSAGE[] = "You cannot delete the ID attribute.";
 const char CHILD_ADDED_MESSAGE[] = "The child was added.";
+const char EMPTY_FILE_MESSAGE[] = "The file is empty.";
 
 class XmlParser {
 private:
@@ -111,7 +112,7 @@ Element* XmlParser::constructElement(const string& line) {
 	while (regex_search(iterator, line.cend(), match, attributeRgx)) {
 		if (match[1] == "id") {
 			elementId = this->generateId(match[2]);
-			
+
 			element->setId(elementId);
 		}
 		else {
@@ -195,6 +196,11 @@ void XmlParser::parse(const vector<string>& fileContent) {
 }
 
 void XmlParser::print() {
+	if (this->rootElement == nullptr) {
+		cout << EMPTY_FILE_MESSAGE << endl;
+		return;
+	}
+
 	cout << (*this->rootElement);
 }
 
@@ -245,7 +251,7 @@ vector<Attribute*> XmlParser::getChildrenAttributes(const string& id) {
 	}
 
 	vector<Element*> children = element->getChildren();
-	
+
 	for (Element*& child : children) {
 		for (Attribute*& attr : child->getAttributes()) {
 			attrs.push_back(attr);
@@ -320,7 +326,7 @@ void XmlParser::addChildToElement(const string& id, const string& childTag) {
 	child->setId(childId);
 
 	element->addChildElement(child);
-	
+
 	this->elements.push_back(child);
 	this->ids.push_back(childId);
 
