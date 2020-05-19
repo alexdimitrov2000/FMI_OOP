@@ -1,5 +1,3 @@
-#include <iostream>
-#include <vector>
 #include "FileManager.h"
 #include "XmlParser.h"
 
@@ -25,6 +23,7 @@ const char NEWCHILD_COMMAND[] = "newchild";
 const char XPATH_COMMAND[] = "xpath";
 
 // Command Messages
+const char CLOSE_OPENED_FILE_MESSAGE[] = "There is an opened file. Please close it before you open another one.";
 const char UNOPENED_FILE_MESSAGE[] = "There is no file opened. You have to open a file at first.";
 const char INVALID_COMMAND_MESSAGE[] = "Invalid command.";
 
@@ -43,7 +42,10 @@ int main()
 		vector<string> tokens = StringHelper::split(userInput);
 		string command = tokens[0];
 
-		if (command == OPEN_COMMAND) {
+		if (command == OPEN_COMMAND && fileManager.isFileOpened()) {
+			cout << CLOSE_OPENED_FILE_MESSAGE << endl;
+		}
+		else if (command == OPEN_COMMAND) {
 			string filePath = tokens[1];
 			fileManager.open(filePath);
 
@@ -126,7 +128,7 @@ int main()
 			parser.addChildToElement(id, tag);
 		}
 		else if (command == XPATH_COMMAND) {
-
+			
 		}
 		else {
 			cout << INVALID_COMMAND_MESSAGE << endl;
