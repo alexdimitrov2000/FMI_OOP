@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <regex>
 #include "Element.h"
 #include "StringHelper.h"
 
@@ -178,6 +179,7 @@ void XmlParser::parse(const vector<string>& fileContent) {
 		}
 
 		if (this->openedElements.size() > 0) {
+			element->setNumberOfParents(this->openedElements.back()->getNumberOfParents() + 1);
 			this->openedElements.back()->addChildElement(element);
 		}
 		else if (this->rootElement == nullptr) {

@@ -11,6 +11,7 @@ private:
 	string content;
 	bool isTagSelfClosed;
 	bool isElementClosed;
+	unsigned int numberOfParents;
 
 public:
 	Element();
@@ -26,12 +27,14 @@ public:
 	string getContent() const;
 	bool isSelfClosed() const;
 	bool isClosed() const;
+	unsigned int getNumberOfParents() const;
 
 	void setId(const string& id);
 	void setTag(const string& tag);
 	void addContent(const string& content, bool trunc = false);
 	void setIsSelfClosed(bool isSelfClosed);
 	void setIsClosed(bool isClosed);
+	void setNumberOfParents(unsigned int numberOfParents);
 
 	void addAttribute(Attribute*& attr);
 	void addChildElement(Element*& element);

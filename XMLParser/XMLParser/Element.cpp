@@ -1,13 +1,15 @@
 #include <ostream>
 #include <algorithm>
 #include "Element.h"
+#include "StringHelper.h"
 
-Element::Element() : id(), tag(), attributes(), children(), content(), isTagSelfClosed(false), isElementClosed(false) {}
+Element::Element() : id(), tag(), attributes(), children(), content(), isTagSelfClosed(false), isElementClosed(false), numberOfParents(0) {}
 
-Element::Element(const string& tag, bool isSelfClosed) : id(), tag(tag), attributes(), children(), content(), isTagSelfClosed(isSelfClosed), isElementClosed(false) {}
+Element::Element(const string& tag, bool isSelfClosed) : id(), tag(tag), attributes(), children(), content(), 
+														 isTagSelfClosed(isSelfClosed), isElementClosed(false), numberOfParents(0) {}
 
-Element::Element(const Element& other) : id(other.id), tag(other.tag), attributes(other.attributes),
-										 children(other.children), content(other.content), isTagSelfClosed(other.isTagSelfClosed), isElementClosed(other.isElementClosed) {}
+Element::Element(const Element& other) : id(other.id), tag(other.tag), attributes(other.attributes), children(other.children), content(other.content), 
+										 isTagSelfClosed(other.isTagSelfClosed), isElementClosed(other.isElementClosed), numberOfParents(other.numberOfParents) {}
 
 Element& Element::operator=(const Element& other) {
 	if (this != &other) {
@@ -18,6 +20,7 @@ Element& Element::operator=(const Element& other) {
 		this->content = other.content;
 		this->isTagSelfClosed = other.isTagSelfClosed;
 		this->isElementClosed = other.isElementClosed;
+		this->numberOfParents = other.numberOfParents;
 	}
 
 	return *this;
@@ -67,6 +70,10 @@ bool Element::isClosed() const {
 	return this->isTagSelfClosed || this->isElementClosed;
 }
 
+unsigned int Element::getNumberOfParents() const {
+	return this->numberOfParents;
+}
+
 void Element::setId(const string& id) {
 	this->id = id;
 }
@@ -82,7 +89,7 @@ void Element::addContent(const string& content, bool trunc) {
 	}
 
 	if (this->content != "") {
-		this->content += '\n';
+		this->content += ' ';
 	}
 
 	this->content += content;
@@ -94,6 +101,10 @@ void Element::setIsSelfClosed(bool isTagSelfClosed) {
 
 void Element::setIsClosed(bool isClosed) {
 	this->isElementClosed = isClosed;
+}
+
+void Element::setNumberOfParents(unsigned int numberOfParents) {
+	this->numberOfParents = numberOfParents;
 }
 
 void Element::addAttribute(Attribute*& attr) {
@@ -122,15 +133,15 @@ ostream& operator<<(ostream& output, const Element& element) {
 	output << '>' << endl;
 
 	for (Element* child : element.children) {
-		output << (*child);
+		output << StringHelper::indent(child->getNumberOfParents()) << (*child);
 	}
 
 	if (element.content != "")
 	{
-		output << element.content << endl;
+		output << StringHelper::indent(element.getNumberOfParents() + 1) << element.content << endl;
 	}
 
-	output << "</" << element.tag << '>' << endl;
+	output << StringHelper::indent(element.getNumberOfParents()) << "</" << element.tag << '>' << endl;
 
 	return output;
 }
