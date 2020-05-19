@@ -23,6 +23,7 @@
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="StringHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attribute.h" />
