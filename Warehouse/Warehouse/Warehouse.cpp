@@ -18,9 +18,7 @@ Warehouse& Warehouse::operator=(const Warehouse& other) {
 }
 
 Warehouse::~Warehouse() {
-	for (Section* section : this->sections) {
-		delete section;
-	}
+	this->destroy();
 }
 
 bool Warehouse::isFull() const {
@@ -60,5 +58,11 @@ void Warehouse::build() {
 
 		this->addSection(section);
 		sectionIndex++;
+	}
+}
+
+void Warehouse::destroy() {
+	for (Section* section : this->sections) {
+		delete section;
 	}
 }

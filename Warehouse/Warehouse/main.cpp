@@ -28,6 +28,7 @@ int main()
 	getline(cin, userInput);
 
 	FileManager fileManager;
+	Warehouse warehouse;
 
 	while (userInput != EXIT_COMMAND)
 	{
@@ -43,6 +44,8 @@ int main()
 
 			if (!fileManager.isFileOpened())
 				fileManager.isFileOpened(true);
+
+			warehouse.build();
 		}
 		else if (command == HELP_COMMAND) {
 			fileManager.help();
@@ -59,6 +62,8 @@ int main()
 		}
 		else if (command == CLOSE_COMMAND) {
 			fileManager.close();
+
+			warehouse.destroy();
 		}
 		else {
 			cout << INVALID_COMMAND_MESSAGE << endl;
