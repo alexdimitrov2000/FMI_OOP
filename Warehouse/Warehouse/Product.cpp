@@ -1,7 +1,7 @@
-#include "Product.h"
 #include <cstring>
+#include "Product.h"
 
-Product::Product() : name(""), manufacturerName(""), unit(""), expiryDate(), entryDate(), availableQuantity(0), location(), comment("") {}
+Product::Product() : name(), manufacturerName(), unit(), expiryDate(), entryDate(), availableQuantity(0), location(), comment() {}
 
 Product::Product(const string& name, const string& manufacturerName, const string& unit, const Date& expiryDate, const Date& entryDate, 
 				unsigned int availableQuantity, const ProductLocation& location, const string& comment) 

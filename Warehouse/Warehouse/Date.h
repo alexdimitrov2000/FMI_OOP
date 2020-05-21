@@ -16,17 +16,13 @@ public:
 	Date(const Date& other);
 	Date& operator=(const Date& other);
 
-	friend ostream& operator<<(ostream& output, const Date& date);
-
 	unsigned short int getDay() const;
-
 	unsigned short int getMonth() const;
-
 	unsigned short int getYear() const;
 
 	void setDay(unsigned short int day);
-
 	void setMonth(unsigned short int month);
-
 	void setYear(unsigned short int year);
+
+	friend ostream& operator<<(ostream& output, const Date& date);
 };
