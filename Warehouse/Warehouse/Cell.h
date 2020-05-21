@@ -2,8 +2,6 @@
 #include <vector>
 #include "Product.h"
 
-const unsigned int MAX_PRODUCTS_IN_CELL = 5;
-
 class Cell {
 private:
 	vector<Product*> products;

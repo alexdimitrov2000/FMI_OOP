@@ -1,5 +1,7 @@
 #include "Section.h"
 
+const unsigned int MAX_SHELVES_IN_SECTION = 5;
+
 Section::Section() : shelves(), name(), isSectionFull(false) {}
 
 Section::Section(const string& name) : shelves(), name(name), isSectionFull(false) {}
@@ -34,7 +36,7 @@ string Section::getName() const {
 	return this->name;
 }
 
-Shelf* Section::operator[](size_t index) {
+Shelf* Section::at(size_t index) {
 	return this->shelves[index];
 }
 

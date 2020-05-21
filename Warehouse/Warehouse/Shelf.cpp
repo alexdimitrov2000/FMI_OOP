@@ -1,5 +1,7 @@
 #include "Shelf.h"
 
+const unsigned int MAX_CELLS_ON_SHELF = 10;
+
 Shelf::Shelf() : cells(), isShelfFull(false) {}
 
 Shelf::Shelf(const Shelf& other) : cells(other.cells), isShelfFull(other.isShelfFull) {}
@@ -27,7 +29,7 @@ void Shelf::isFull(bool isFull) {
 	this->isShelfFull = isFull;
 }
 
-Cell* Shelf::operator[](size_t index) {
+Cell* Shelf::at(size_t index) {
 	return this->cells[index];
 }
 

@@ -1,8 +1,6 @@
 #pragma once
 #include "Shelf.h"
 
-const unsigned int MAX_SHELVES_IN_SECTION = 5;
-
 class Section {
 private:
 	vector<Shelf*> shelves;
@@ -20,7 +18,7 @@ public:
 	void isFull(bool isFull); // setter for this->isSectionFull
 
 	string getName() const;
-	Shelf* operator[](size_t index);
+	Shelf* at(size_t index);
 
 	void setName(const string& name);
 	void addShelf(Shelf* shelf);

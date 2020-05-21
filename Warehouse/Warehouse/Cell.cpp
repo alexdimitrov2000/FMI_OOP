@@ -1,5 +1,7 @@
 #include "Cell.h"
 
+const unsigned int MAX_PRODUCTS_IN_CELL = 5;
+
 Cell::Cell() : products(), isCellFull(false) {}
 
 Cell::Cell(const Cell& other) : products(other.products), isCellFull(other.isCellFull) {}
