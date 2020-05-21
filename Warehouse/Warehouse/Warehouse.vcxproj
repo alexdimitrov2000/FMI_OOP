@@ -158,9 +158,12 @@
     <ClCompile Include="Warehouse.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cell.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Product.h" />
     <ClInclude Include="ProductLocation.h" />
+    <ClInclude Include="Section.h" />
+    <ClInclude Include="Shelf.h" />
     <ClInclude Include="Warehouse.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

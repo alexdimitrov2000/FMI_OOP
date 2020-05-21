@@ -44,5 +44,14 @@
     <ClInclude Include="Date.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Cell.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shelf.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Section.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
