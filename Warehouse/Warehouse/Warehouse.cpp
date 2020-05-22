@@ -5,14 +5,13 @@
 const unsigned int MAX_SECTIONS = 3;
 const SectionType SECTION_TYPES[] = { SectionType::Foods, SectionType::Drinks, SectionType::Others };
 
-Warehouse::Warehouse() : sections(), allProducts(), isWarehouseFull(false) {}
+Warehouse::Warehouse() : sections(), isWarehouseFull(false) {}
 
-Warehouse::Warehouse(const Warehouse& other) : sections(other.sections), allProducts(other.allProducts), isWarehouseFull(other.isWarehouseFull) {}
+Warehouse::Warehouse(const Warehouse& other) : sections(other.sections), isWarehouseFull(other.isWarehouseFull) {}
 
 Warehouse& Warehouse::operator=(const Warehouse& other) {
 	if (this != &other) {
 		this->sections = other.sections;
-		this->allProducts = other.allProducts;
 		this->isWarehouseFull = other.isWarehouseFull;
 	}
 
@@ -93,6 +92,6 @@ void Warehouse::addFileProducts(vector<string> fileLines) {
 		product = new Product(name, manufacturer, unit, expiryDate, entryDate, quantity, location, comment);
 
 		this->sections.at(location.getSection())->at(location.getShelf())->at(location.getCell())->addProduct(product);
-		this->allProducts.push_back(product);
+		this->sections.at(location.getSection())->addToSectionProducts(product);
 	}
 }

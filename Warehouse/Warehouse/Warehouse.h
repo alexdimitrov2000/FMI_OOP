@@ -4,7 +4,6 @@
 class Warehouse {
 private:
 	vector<Section*> sections;
-	vector<Product*> allProducts;
 	bool isWarehouseFull;
 
 public:

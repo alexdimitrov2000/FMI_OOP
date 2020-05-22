@@ -2,17 +2,18 @@
 
 const unsigned int MAX_SHELVES_IN_SECTION = 5;
 
-Section::Section() : shelves(), type(), isSectionFull(false) {}
+Section::Section() : shelves(), type(), isSectionFull(false), products() {}
 
-Section::Section(const SectionType& name) : shelves(), type(name), isSectionFull(false) {}
+Section::Section(const SectionType& name) : shelves(), type(name), isSectionFull(false), products() {}
 
-Section::Section(const Section& other) : shelves(other.shelves), type(other.type), isSectionFull(other.isSectionFull) {}
+Section::Section(const Section& other) : shelves(other.shelves), type(other.type), isSectionFull(other.isSectionFull), products(other.products) {}
 
 Section& Section::operator=(const Section& other) {
 	if (this != &other) {
 		this->shelves = other.shelves;
 		this->type = other.type;
 		this->isSectionFull = other.isSectionFull;
+		this->products = other.products;
 	}
 
 	return *this;
@@ -42,6 +43,10 @@ Shelf* Section::at(size_t index) {
 	return this->shelves[index];
 }
 
+vector<Product*> Section::getProducts() const {
+	return this->products;
+}
+
 void Section::setType(const SectionType& type) {
 	this->type = type;
 }
@@ -50,4 +55,8 @@ void Section::addShelf(Shelf* shelf) {
 	this->shelves.push_back(shelf);
 
 	this->isSectionFull = this->shelves.size() >= MAX_SHELVES_IN_SECTION;
+}
+
+void Section::addToSectionProducts(Product* product) {
+	this->products.push_back(product);
 }

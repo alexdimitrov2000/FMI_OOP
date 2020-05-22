@@ -7,6 +7,7 @@ private:
 	vector<Shelf*> shelves;
 	SectionType type;
 	bool isSectionFull;
+	vector<Product*> products;
 
 public:
 	Section();
@@ -20,7 +21,9 @@ public:
 
 	SectionType getType() const;
 	Shelf* at(size_t index);
+	vector<Product*> getProducts() const;
 
 	void setType(const SectionType& type);
 	void addShelf(Shelf* shelf);
+	void addToSectionProducts(Product* product);
 };
