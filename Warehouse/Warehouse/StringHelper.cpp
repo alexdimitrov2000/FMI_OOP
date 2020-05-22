@@ -37,3 +37,17 @@ int StringHelper::convertToInt(const string& text) {
 
 	return result;
 }
+
+string StringHelper::sectionTypeToString(const SectionType& type) {
+	switch (type)
+	{
+	case SectionType::Foods:
+		return "Foods";
+	case SectionType::Drinks:
+		return "Drinks";
+	case SectionType::Others:
+		return "Others";
+	default:
+		break;
+	}
+}

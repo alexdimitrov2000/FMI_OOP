@@ -74,5 +74,8 @@
     <ClInclude Include="StringHelper.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="SectionType.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

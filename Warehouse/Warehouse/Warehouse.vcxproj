@@ -169,6 +169,7 @@
     <ClInclude Include="Product.h" />
     <ClInclude Include="ProductLocation.h" />
     <ClInclude Include="Section.h" />
+    <ClInclude Include="SectionType.h" />
     <ClInclude Include="Shelf.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Warehouse.h" />
