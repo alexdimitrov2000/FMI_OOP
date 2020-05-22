@@ -1,10 +1,19 @@
 #include "Date.h"
+#include "StringHelper.h"
 
 const char DATE_PREFIX_ZERO = '0';
 const char DATE_DELIMITER = '-';
 const unsigned int DEFAULT_YEAR = 1900;
 
 Date::Date() : day(0), month(0), year(0) {}
+
+Date::Date(const string& date) {
+	vector<string> tokens = StringHelper::split(date, '-');
+
+	this->year = StringHelper::convertToInt(tokens[0]);
+	this->month = StringHelper::convertToInt(tokens[1]);
+	this->day = StringHelper::convertToInt(tokens[2]);
+}
 
 Date::Date(unsigned short int day, unsigned short int month, unsigned short int year) : day(day), month(month), year(year) {}
 

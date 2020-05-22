@@ -10,6 +10,7 @@ private:
 
 public:
 	Date();
+	Date(const string& date);
 	Date(unsigned short int day, unsigned short int month, unsigned short int year);
 	Date(tm* gmtTime);
 	Date(tm& gmtTime);
