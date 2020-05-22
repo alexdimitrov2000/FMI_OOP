@@ -1,28 +1,16 @@
 #include "ProductLocation.h"
 
-ProductLocation::ProductLocation() {
-	this->section = 0;
-	this->shelf = 0;
-	this->number = 0;
-}
+ProductLocation::ProductLocation() : section(0), shelf(0), cell(0) {}
 
-ProductLocation::ProductLocation(unsigned int section, unsigned int shelf, unsigned int number) {
-	this->section = section;
-	this->shelf = shelf;
-	this->number = number;
-}
+ProductLocation::ProductLocation(unsigned int section, unsigned int shelf, unsigned int cell) : section(section), shelf(shelf), cell(cell) {}
 
-ProductLocation::ProductLocation(const ProductLocation& other) {
-	this->section = other.section;
-	this->shelf = other.shelf;
-	this->number = other.number;
-}
+ProductLocation::ProductLocation(const ProductLocation& other) : section(other.section), shelf(other.shelf), cell(other.cell) {}
 
 ProductLocation& ProductLocation::operator=(const ProductLocation& other) {
 	if (this != &other) {
 		this->section = other.section;
 		this->shelf = other.shelf;
-		this->number = other.number;
+		this->cell = other.cell;
 	}
 
 	return *this;
@@ -36,8 +24,8 @@ unsigned int ProductLocation::getShelf() const {
 	return this->shelf;
 }
 
-unsigned int ProductLocation::getNumber() const {
-	return this->number;
+unsigned int ProductLocation::getCell() const {
+	return this->cell;
 }
 
 void ProductLocation::setSection(const unsigned int section) {
@@ -48,6 +36,6 @@ void ProductLocation::setShelf(const unsigned int shelf) {
 	this->shelf = shelf;
 }
 
-void ProductLocation::setNumber(const unsigned int number) {
-	this->number = number;
+void ProductLocation::setCell(const unsigned int cell) {
+	this->cell = cell;
 }
