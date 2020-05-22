@@ -21,4 +21,5 @@ public:
 	Section* at(size_t index);
 	void build();
 	void destroy();
+	void addFileProducts(vector<string> fileLines);
 };

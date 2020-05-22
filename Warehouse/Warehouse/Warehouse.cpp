@@ -1,4 +1,6 @@
+#include <iostream>
 #include "Warehouse.h"
+#include "StringHelper.h"
 
 const unsigned int MAX_SECTIONS = 3;
 const SectionType SECTION_TYPES[] = { SectionType::Foods, SectionType::Drinks, SectionType::Others };
@@ -64,5 +66,33 @@ void Warehouse::build() {
 void Warehouse::destroy() {
 	for (Section* section : this->sections) {
 		delete section;
+	}
+
+	this->sections.clear();
+}
+
+void Warehouse::addFileProducts(vector<string> fileLines) {
+	vector<string> tokens;
+	string name, manufacturer, unit, comment;
+	unsigned int quantity;
+	Product* product = nullptr;
+
+	for (size_t i = 0; i < fileLines.size(); i++)
+	{
+		tokens = StringHelper::split(fileLines[i]);
+
+		name = tokens[0];
+		manufacturer = tokens[1];
+		unit = tokens[2];
+		Date expiryDate(tokens[3]);
+		Date entryDate(tokens[4]);
+		quantity = StringHelper::convertToInt(tokens[5]);
+		ProductLocation location(tokens[6]);
+		comment = StringHelper::concatenate(tokens, tokens.begin() + 7, tokens.end());
+
+		product = new Product(name, manufacturer, unit, expiryDate, entryDate, quantity, location, comment);
+
+		this->sections.at(location.getSection())->at(location.getShelf())->at(location.getCell())->addProduct(product);
+		this->allProducts.push_back(product);
 	}
 }

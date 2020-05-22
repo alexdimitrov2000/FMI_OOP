@@ -46,6 +46,8 @@ int main()
 				fileManager.isFileOpened(true);
 
 			warehouse.build();
+
+			warehouse.addFileProducts(fileManager.getFileContent());
 		}
 		else if (command == HELP_COMMAND) {
 			fileManager.help();
