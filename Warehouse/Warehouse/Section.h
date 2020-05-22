@@ -1,15 +1,16 @@
 #pragma once
 #include "Shelf.h"
+#include "SectionType.h"
 
 class Section {
 private:
 	vector<Shelf*> shelves;
-	string name;
+	SectionType type;
 	bool isSectionFull;
 
 public:
 	Section();
-	Section(const string& name);
+	Section(const SectionType& type);
 	Section(const Section& other);
 	Section& operator=(const Section& other);
 	~Section();
@@ -17,9 +18,9 @@ public:
 	bool isFull() const; // getter for this->isSectionFull
 	void isFull(bool isFull); // setter for this->isSectionFull
 
-	string getName() const;
+	SectionType getType() const;
 	Shelf* at(size_t index);
 
-	void setName(const string& name);
+	void setType(const SectionType& type);
 	void addShelf(Shelf* shelf);
 };

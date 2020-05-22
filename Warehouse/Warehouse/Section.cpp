@@ -2,16 +2,16 @@
 
 const unsigned int MAX_SHELVES_IN_SECTION = 5;
 
-Section::Section() : shelves(), name(), isSectionFull(false) {}
+Section::Section() : shelves(), type(), isSectionFull(false) {}
 
-Section::Section(const string& name) : shelves(), name(name), isSectionFull(false) {}
+Section::Section(const SectionType& name) : shelves(), type(name), isSectionFull(false) {}
 
-Section::Section(const Section& other) : shelves(other.shelves), name(other.name), isSectionFull(other.isSectionFull) {}
+Section::Section(const Section& other) : shelves(other.shelves), type(other.type), isSectionFull(other.isSectionFull) {}
 
 Section& Section::operator=(const Section& other) {
 	if (this != &other) {
 		this->shelves = other.shelves;
-		this->name = other.name;
+		this->type = other.type;
 		this->isSectionFull = other.isSectionFull;
 	}
 
@@ -32,16 +32,16 @@ void Section::isFull(bool isFull) {
 	this->isSectionFull = isFull;
 }
 
-string Section::getName() const {
-	return this->name;
+SectionType Section::getType() const {
+	return this->type;
 }
 
 Shelf* Section::at(size_t index) {
 	return this->shelves[index];
 }
 
-void Section::setName(const string& name) {
-	this->name = name;
+void Section::setType(const SectionType& type) {
+	this->type = type;
 }
 
 void Section::addShelf(Shelf* shelf) {

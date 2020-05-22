@@ -1,7 +1,7 @@
 #include "Warehouse.h"
 
 const unsigned int MAX_SECTIONS = 3;
-const string SECTION_NAMES[] = { "Foods", "Drinks", "Others" };
+const SectionType SECTION_TYPES[] = { SectionType::Foods, SectionType::Drinks, SectionType::Others };
 
 Warehouse::Warehouse() : sections(), allProducts(), isWarehouseFull(false) {}
 
@@ -43,7 +43,7 @@ void Warehouse::build() {
 	int sectionIndex = 0;
 
 	while (!this->isWarehouseFull) {
-		Section* section = new Section(SECTION_NAMES[sectionIndex]);
+		Section* section = new Section(SECTION_TYPES[sectionIndex]);
 
 		while (!section->isFull()) {
 			Shelf* shelf = new Shelf();
