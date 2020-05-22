@@ -22,6 +22,8 @@ Section::~Section() {
 	for (Shelf* shelf : this->shelves) {
 		delete shelf;
 	}
+
+	this->shelves.clear();
 }
 
 bool Section::isFull() const {

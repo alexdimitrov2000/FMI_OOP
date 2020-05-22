@@ -1,6 +1,6 @@
 #include "Shelf.h"
 
-const unsigned int MAX_CELLS_ON_SHELF = 10;
+const unsigned int MAX_CELLS_ON_SHELF = 5;
 
 Shelf::Shelf() : cells(), isShelfFull(false) {}
 
@@ -19,6 +19,8 @@ Shelf::~Shelf() {
 	for (Cell* cell : this->cells) {
 		delete cell;
 	}
+
+	this->cells.clear();
 }
 
 bool Shelf::isFull() const {

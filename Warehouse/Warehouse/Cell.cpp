@@ -1,6 +1,6 @@
 #include "Cell.h"
 
-const unsigned int MAX_PRODUCTS_IN_CELL = 5;
+const unsigned int MAX_PRODUCTS_IN_CELL = 3;
 
 Cell::Cell() : products(), isCellFull(false) {}
 
@@ -19,6 +19,8 @@ Cell::~Cell() {
 	for (Product* product : this->products) {
 		delete product;
 	}
+
+	this->products.clear();
 }
 
 vector<Product*> Cell::getProducts() const {
