@@ -1,10 +1,12 @@
 #include "ProductLocation.h"
 #include "StringHelper.h"
 
+const char LOCATION_DELIMITER = '-';
+
 ProductLocation::ProductLocation() : section(0), shelf(0), cell(0) {}
 
 ProductLocation::ProductLocation(const string& location) {
-	vector<string> tokens = StringHelper::split(location, '-');
+	vector<string> tokens = StringHelper::split(location, LOCATION_DELIMITER);
 
 	this->section = StringHelper::convertToInt(tokens[0]);
 	this->shelf = StringHelper::convertToInt(tokens[1]);
@@ -47,4 +49,9 @@ void ProductLocation::setShelf(const unsigned int shelf) {
 
 void ProductLocation::setCell(const unsigned int cell) {
 	this->cell = cell;
+}
+
+ostream& operator<<(ostream& output, const ProductLocation& location) {
+	output << location.section << LOCATION_DELIMITER << location.shelf << LOCATION_DELIMITER << location.cell;
+	return output;
 }

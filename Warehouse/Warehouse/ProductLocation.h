@@ -1,4 +1,5 @@
 #pragma once
+#include <ostream>
 #include <string>
 using namespace std;
 
@@ -22,4 +23,6 @@ public:
 	void setSection(const unsigned int section);
 	void setShelf(const unsigned int shelf);
 	void setCell(const unsigned int cell);
+
+	friend ostream& operator<<(ostream& output, const ProductLocation& location);
 };
