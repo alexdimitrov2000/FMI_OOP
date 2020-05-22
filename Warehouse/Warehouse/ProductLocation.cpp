@@ -1,6 +1,15 @@
 #include "ProductLocation.h"
+#include "StringHelper.h"
 
 ProductLocation::ProductLocation() : section(0), shelf(0), cell(0) {}
+
+ProductLocation::ProductLocation(const string& location) {
+	vector<string> tokens = StringHelper::split(location, '-');
+
+	this->section = StringHelper::convertToInt(tokens[0]);
+	this->shelf = StringHelper::convertToInt(tokens[1]);
+	this->cell = StringHelper::convertToInt(tokens[2]);
+}
 
 ProductLocation::ProductLocation(unsigned int section, unsigned int shelf, unsigned int cell) : section(section), shelf(shelf), cell(cell) {}
 

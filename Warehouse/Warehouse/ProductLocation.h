@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+using namespace std;
 
 class ProductLocation {
 private:
@@ -8,6 +10,7 @@ private:
 
 public:
 	ProductLocation();
+	ProductLocation(const string& location);
 	ProductLocation(unsigned int section, unsigned int shelf, unsigned int cell);
 	ProductLocation(const ProductLocation& other);
 	ProductLocation& operator=(const ProductLocation& other);
