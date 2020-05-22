@@ -1,6 +1,8 @@
 #include <cstring>
 #include "Product.h"
 
+const char SPACE_DELIMITER = ' ';
+
 Product::Product() : name(), manufacturerName(), unit(), expiryDate(), entryDate(), availableQuantity(0), location(), comment() {}
 
 Product::Product(const string& name, const string& manufacturerName, const string& unit, const Date& expiryDate, const Date& entryDate, 
@@ -91,4 +93,11 @@ void Product::setLocation(const ProductLocation& location) {
 
 void Product::setComment(const string& comment) {
 	this->comment = comment;
+}
+
+ostream& operator<<(ostream& output, const Product& product) {
+	output << product.name << SPACE_DELIMITER << product.manufacturerName << SPACE_DELIMITER << product.unit << SPACE_DELIMITER << product.expiryDate << SPACE_DELIMITER 
+		<< product.entryDate << SPACE_DELIMITER << product.availableQuantity << SPACE_DELIMITER << product.location << SPACE_DELIMITER << product.comment;
+
+	return output;
 }

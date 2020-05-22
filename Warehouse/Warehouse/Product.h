@@ -40,4 +40,6 @@ public:
 	void setAvailableQuantity(const unsigned int quantity);
 	void setLocation(const ProductLocation& location);
 	void setComment(const string& comment);
+
+	friend ostream& operator<<(ostream& output, const Product& product);
 };
