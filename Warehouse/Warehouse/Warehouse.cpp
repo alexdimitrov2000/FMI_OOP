@@ -5,6 +5,9 @@
 const unsigned int MAX_SECTIONS = 3;
 const SectionType SECTION_TYPES[] = { SectionType::Foods, SectionType::Drinks, SectionType::Others };
 
+// Messages
+const string NO_PRODUCTS_IN_SECTION_MESSAGE = "No products in section.";
+
 Warehouse::Warehouse() : sections(), isWarehouseFull(false) {}
 
 Warehouse::Warehouse(const Warehouse& other) : sections(other.sections), isWarehouseFull(other.isWarehouseFull) {}
@@ -93,5 +96,21 @@ void Warehouse::addFileProducts(vector<string> fileLines) {
 
 		this->sections.at(location.getSection())->at(location.getShelf())->at(location.getCell())->addProduct(product);
 		this->sections.at(location.getSection())->addToSectionProducts(product);
+	}
+}
+
+void Warehouse::printProducts() {
+	for (Section*& section : this->sections) {
+		cout << StringHelper::sectionTypeToString(section->getType()) << endl;
+
+		if (section->getProducts().size() == 0) {
+			cout << NO_PRODUCTS_IN_SECTION_MESSAGE << endl;
+			continue;
+		}
+
+		for (Product*& product : section->getProducts()) {
+			cout << (*product) << endl;
+		}
+		cout << endl;
 	}
 }

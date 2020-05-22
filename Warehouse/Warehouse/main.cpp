@@ -14,6 +14,7 @@ const char SAVE_AS_COMMAND[] = "saveas";
 const char CLOSE_COMMAND[] = "close";
 const char HELP_COMMAND[] = "help";
 const char EXIT_COMMAND[] = "exit";
+const char PRINT_COMMAND[] = "print";
 
 // Command Messages
 const char CLOSE_OPENED_FILE_MESSAGE[] = "There is an opened file. Please close it before you open another one.";
@@ -66,6 +67,9 @@ int main()
 			fileManager.close();
 
 			warehouse.destroy();
+		}
+		else if (command == PRINT_COMMAND) {
+			warehouse.printProducts();
 		}
 		else {
 			cout << INVALID_COMMAND_MESSAGE << endl;

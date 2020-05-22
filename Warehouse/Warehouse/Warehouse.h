@@ -21,4 +21,5 @@ public:
 	void build();
 	void destroy();
 	void addFileProducts(vector<string> fileLines);
+	void printProducts();
 };
