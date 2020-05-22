@@ -1,7 +1,12 @@
 #include <regex>
 #include "StringHelper.h"
 
-vector<string> StringHelper::split(const string& line) {
+const string FOODS_TYPE = "Foods";
+const string DRINKS_TYPE = "Drinks";
+const string OTHERS_TYPE = "Others";
+const string SPACE_DELIMITER = " ";
+
+vector<string> StringHelper::split(const string& line, char separator) {
 	int lastSpaceIndex = 0;
 	int lineLength = line.size();
 
@@ -9,7 +14,7 @@ vector<string> StringHelper::split(const string& line) {
 
 	for (int i = 0; i < lineLength; i++)
 	{
-		if (line[i] == ' ') {
+		if (line[i] == separator) {
 			tokens.push_back(line.substr(lastSpaceIndex, i - lastSpaceIndex));
 			lastSpaceIndex = i + 1;
 		}
@@ -42,12 +47,23 @@ string StringHelper::sectionTypeToString(const SectionType& type) {
 	switch (type)
 	{
 	case SectionType::Foods:
-		return "Foods";
+		return FOODS_TYPE;
 	case SectionType::Drinks:
-		return "Drinks";
+		return DRINKS_TYPE;
 	case SectionType::Others:
-		return "Others";
+		return OTHERS_TYPE;
 	default:
 		break;
 	}
+}
+
+string StringHelper::concatenate(vector<string> tokens, vector<string>::iterator from, vector<string>::iterator to) {
+	string result;
+
+	for (vector<string>::iterator i = from; i != to; i++) {
+		result += (*i) + SPACE_DELIMITER;
+	}
+	result.pop_back();
+
+	return result;
 }
