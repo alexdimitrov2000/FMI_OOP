@@ -8,7 +8,7 @@ const unsigned int DEFAULT_YEAR = 1900;
 Date::Date() : day(0), month(0), year(0) {}
 
 Date::Date(const string& date) {
-	vector<string> tokens = StringHelper::split(date, '-');
+	vector<string> tokens = StringHelper::split(date, DATE_DELIMITER);
 
 	this->year = StringHelper::convertToInt(tokens[0]);
 	this->month = StringHelper::convertToInt(tokens[1]);
