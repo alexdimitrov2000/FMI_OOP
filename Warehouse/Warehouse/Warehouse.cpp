@@ -78,6 +78,7 @@ void Warehouse::addFileProducts(vector<string> fileLines) {
 	string name, manufacturer, unit, comment;
 	unsigned int quantity;
 	Product* product = nullptr;
+	Section* section;
 
 	for (size_t i = 0; i < fileLines.size(); i++)
 	{
@@ -94,8 +95,9 @@ void Warehouse::addFileProducts(vector<string> fileLines) {
 
 		product = new Product(name, manufacturer, unit, expiryDate, entryDate, quantity, location, comment);
 
-		this->sections.at(location.getSection())->at(location.getShelf())->at(location.getCell())->addProduct(product);
-		this->sections.at(location.getSection())->addToSectionProducts(product);
+		section = this->sections.at(location.getSection());
+		section->at(location.getShelf())->at(location.getCell())->addProduct(product);
+		section->addToSectionProducts(product);
 	}
 }
 
