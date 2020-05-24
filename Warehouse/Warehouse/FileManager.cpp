@@ -14,6 +14,7 @@ const string HELP_MESSAGE = "The following commands are supported:\n"
 							"save		saves the currently open file\n"
 							"saveas <file>	saves the currently open file in <file>\n"
 							"help		prints this information\n"
+							"operations	prints supported operations\n"
 							"exit		exits the program";
 
 FileManager::FileManager() : lines(), filePath(), isOpened() {}

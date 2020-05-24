@@ -5,7 +5,15 @@
 
 const char WELCOME_MESSAGE[] = "Welcome to our 'Warehouse' application! \nYou can enter 'help' for commands info.\n";
 const char USER_INPUT_MESSAGE[] = "Please, enter your command or type 'exit' if you want to quit: ";
+const char PRODUCT_TYPE_MESSAGE[] = "What type of product is it (Foods/Drinks/Others): ";
 const char EXIT_MESSAGE[] = "Exiting the program...";
+const char OPERATIONS_MESSAGE[] = "The following operations are supported:\n"
+								  "print\n"
+								  "productTypes\n"
+								  "add <type> <name> <manufacturer> <unit> <expiryDate> <quantity> <comment>\n"
+								  "remove <name> <quantity>\n"
+								  "log <from> <to>\n"
+								  "clean";
 
 // Commands
 const char OPEN_COMMAND[] = "open";
@@ -13,12 +21,15 @@ const char SAVE_COMMAND[] = "save";
 const char SAVE_AS_COMMAND[] = "saveas";
 const char CLOSE_COMMAND[] = "close";
 const char HELP_COMMAND[] = "help";
+const char OPERATIONS_COMMAND[] = "operations";
 const char EXIT_COMMAND[] = "exit";
 const char PRINT_COMMAND[] = "print";
+const char PRODUCT_TYPES_COMMAND[] = "productTypes";
 
 // Command Messages
 const char CLOSE_OPENED_FILE_MESSAGE[] = "There is an opened file. Please close it before you open another one.";
 const char UNOPENED_FILE_MESSAGE[] = "There is no file opened. You have to open a file at first.";
+const char SUPPORTED_PRODUCT_TYPES_MESSAGE[] = "Supported product types: Foods/Drinks/Others";
 const char INVALID_COMMAND_MESSAGE[] = "Invalid command.";
 
 int main()
@@ -67,6 +78,12 @@ int main()
 			fileManager.close();
 
 			warehouse.destroy();
+		}
+		else if (command == OPERATIONS_COMMAND) {
+			cout << OPERATIONS_MESSAGE << endl;
+		}
+		else if (command == PRODUCT_TYPES_COMMAND) {
+			cout << SUPPORTED_PRODUCT_TYPES_MESSAGE << endl;
 		}
 		else if (command == PRINT_COMMAND) {
 			warehouse.printProducts();
