@@ -17,6 +17,9 @@ public:
 	Date(const Date& other);
 	Date& operator=(const Date& other);
 
+	bool operator==(const Date& other);
+	bool operator!=(const Date& other);
+
 	unsigned short int getDay() const;
 	unsigned short int getMonth() const;
 	unsigned short int getYear() const;

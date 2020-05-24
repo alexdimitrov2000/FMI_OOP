@@ -34,6 +34,14 @@ Date& Date::operator=(const Date& other) {
 	return *this;
 }
 
+bool Date::operator==(const Date& other) {
+	return this->year == other.year && this->month == other.month && this->day == other.day;
+}
+
+bool Date::operator!=(const Date& other) {
+	return this->year != other.year || this->month != other.month || this->day != other.day;
+}
+
 unsigned short int Date::getDay() const {
 	return this->day;
 }
