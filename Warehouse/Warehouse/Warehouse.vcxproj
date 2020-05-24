@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="DateHelper.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Product.cpp" />
@@ -165,6 +166,7 @@
   <ItemGroup>
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Date.h" />
+    <ClInclude Include="DateHelper.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="Product.h" />
     <ClInclude Include="ProductLocation.h" />

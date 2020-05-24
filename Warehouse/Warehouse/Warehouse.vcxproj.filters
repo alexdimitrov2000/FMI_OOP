@@ -45,6 +45,9 @@
     <ClCompile Include="StringHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DateHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Warehouse.h">
@@ -75,6 +78,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="SectionType.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DateHelper.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
