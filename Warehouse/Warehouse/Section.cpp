@@ -77,5 +77,7 @@ void Section::addShelf(Shelf* shelf) {
 }
 
 void Section::addToSectionProducts(Product* product) {
-	this->products.push_back(product);
+	ProductLocation location = product->getLocation();
+	this->products.push_back(product); // adding the product to the current collection
+	this->shelves[location.getShelf()]->at(location.getCell())->addProduct(product); // adding the product to the particular cell
 }
