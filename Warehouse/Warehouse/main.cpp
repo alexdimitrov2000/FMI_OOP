@@ -5,7 +5,6 @@
 
 const char WELCOME_MESSAGE[] = "Welcome to our 'Warehouse' application! \nYou can enter 'help' for commands info.\n";
 const char USER_INPUT_MESSAGE[] = "Please, enter your command or type 'exit' if you want to quit: ";
-const char PRODUCT_TYPE_MESSAGE[] = "What type of product is it (Foods/Drinks/Others): ";
 const char EXIT_MESSAGE[] = "Exiting the program...";
 const char OPERATIONS_MESSAGE[] = "The following operations are supported:\n"
 								  "print\n"
@@ -13,7 +12,8 @@ const char OPERATIONS_MESSAGE[] = "The following operations are supported:\n"
 								  "add <type> <name> <manufacturer> <unit> <expiryDate> <quantity> <comment>\n"
 								  "remove <name> <quantity>\n"
 								  "log <from> <to>\n"
-								  "clean";
+								  "clean\n"
+								  "Keep in mind that all dates are in format YYYY-MM-DD.";
 
 // Commands
 const char OPEN_COMMAND[] = "open";
@@ -22,9 +22,10 @@ const char SAVE_AS_COMMAND[] = "saveas";
 const char CLOSE_COMMAND[] = "close";
 const char HELP_COMMAND[] = "help";
 const char OPERATIONS_COMMAND[] = "operations";
+const char PRODUCT_TYPES_COMMAND[] = "productTypes";
 const char EXIT_COMMAND[] = "exit";
 const char PRINT_COMMAND[] = "print";
-const char PRODUCT_TYPES_COMMAND[] = "productTypes";
+const char ADD_COMMAND[] = "add";
 
 // Command Messages
 const char CLOSE_OPENED_FILE_MESSAGE[] = "There is an opened file. Please close it before you open another one.";
@@ -87,6 +88,10 @@ int main()
 		}
 		else if (command == PRINT_COMMAND) {
 			warehouse.printProducts();
+		}
+		else if (command == ADD_COMMAND) {
+			tokens.erase(tokens.begin()); // remove the 'add' command string from the vector
+			warehouse.addProduct(tokens);
 		}
 		else {
 			cout << INVALID_COMMAND_MESSAGE << endl;

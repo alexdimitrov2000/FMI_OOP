@@ -1,12 +1,14 @@
 #include <iostream>
 #include "Warehouse.h"
 #include "StringHelper.h"
+#include "DateHelper.h"
 
 const unsigned int MAX_SECTIONS = 3;
 const SectionType SECTION_TYPES[] = { SectionType::Foods, SectionType::Drinks, SectionType::Others };
 
 // Messages
 const string NO_PRODUCTS_IN_SECTION_MESSAGE = "No products in section.";
+const string ADDED_PRODUCT_SUCCESS_MESSAGE = "The product was successfully added to the warehouse.";
 
 Warehouse::Warehouse() : sections(), isWarehouseFull(false) {}
 
@@ -37,6 +39,14 @@ void Warehouse::addSection(Section* section) {
 	this->sections.push_back(section);
 
 	this->isWarehouseFull = this->sections.size() >= MAX_SECTIONS;
+}
+
+int Warehouse::getSectionIndexByType(const string& type) {
+	if (type == StringHelper::sectionTypeToString(SECTION_TYPES[0])) return 0;
+	if (type == StringHelper::sectionTypeToString(SECTION_TYPES[1])) return 1;
+	if (type == StringHelper::sectionTypeToString(SECTION_TYPES[2])) return 2;
+
+	return -1;
 }
 
 Section* Warehouse::at(size_t index) {
@@ -96,7 +106,6 @@ void Warehouse::addFileProducts(vector<string> fileLines) {
 		product = new Product(name, manufacturer, unit, expiryDate, entryDate, quantity, location, comment);
 
 		section = this->sections.at(location.getSection());
-		section->at(location.getShelf())->at(location.getCell())->addProduct(product);
 		section->addToSectionProducts(product);
 	}
 }
@@ -115,4 +124,55 @@ void Warehouse::printProducts() {
 		}
 		cout << endl;
 	}
+}
+
+ProductLocation Warehouse::findLocationForProduct(int sectionIndex, const string& name, Date expiration) {
+	ProductLocation location(sectionIndex, 0, 0);
+	Section* section = this->sections[sectionIndex];
+	int shelvesCnt = section->getShelves().size();
+	int cellsCnt = section->getShelves()[0]->getCells().size();
+	string cellProductsName;
+	Shelf* shelf;
+	Cell* cell;
+
+	if (!section->containsProductWithName(name)) {
+		for (int i = 0; i < shelvesCnt; i++)
+		{
+			shelf = section->at(i);
+
+			for (int g = 0; g < cellsCnt; g++)
+			{
+				cell = shelf->at(g);
+
+				if (cell->isEmpty()) {
+					location.setShelf(i);
+					location.setCell(g);
+
+					return location;
+				}
+			}
+		}
+	}
+
+	return location;
+}
+
+void Warehouse::addProduct(vector<string> tokens)
+{
+	int sectionIndex = this->getSectionIndexByType(tokens[0]);
+	Section* section = this->sections[sectionIndex];
+
+	string name = tokens[1];
+	string manufacturer = tokens[2];
+	string unit = tokens[3];
+	Date expiryDate(tokens[4]);
+	Date entryDate = DateHelper::getTodaysDate();
+	unsigned int quantity = StringHelper::convertToInt(tokens[5]);
+	ProductLocation location = this->findLocationForProduct(sectionIndex, name, expiryDate);
+	string comment = StringHelper::concatenate(tokens, tokens.begin() + 6, tokens.end());
+
+	Product* product = new Product(name, manufacturer, unit, expiryDate, entryDate, quantity, location, comment);
+	section->addToSectionProducts(product);
+
+	cout << ADDED_PRODUCT_SUCCESS_MESSAGE << endl;
 }
