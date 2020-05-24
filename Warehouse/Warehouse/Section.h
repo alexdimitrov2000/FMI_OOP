@@ -22,6 +22,9 @@ public:
 	SectionType getType() const;
 	Shelf* at(size_t index);
 	vector<Product*> getProducts() const;
+	vector<Shelf*> getShelves() const;
+	bool containsProductWithName(const string& name);
+	Product* getProductByName(const string& name);
 
 	void setType(const SectionType& type);
 	void addShelf(Shelf* shelf);

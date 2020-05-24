@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Section.h"
 
 const unsigned int MAX_SHELVES_IN_SECTION = 5;
@@ -45,6 +46,24 @@ Shelf* Section::at(size_t index) {
 
 vector<Product*> Section::getProducts() const {
 	return this->products;
+}
+
+vector<Shelf*> Section::getShelves() const {
+	return this->shelves;
+}
+
+bool Section::containsProductWithName(const string& name) {
+	return count_if(this->products.begin(), this->products.end(), [name](Product* prod) { return prod->getName() == name; }) != 0;
+}
+
+Product* Section::getProductByName(const string& name) {
+	if (!this->containsProductWithName(name)) {
+		return nullptr;
+	}
+
+	vector<Product*>::iterator product = find_if(this->products.begin(), this->products.end(), [name](Product* prod) { return prod->getName() == name; });
+
+	return *product;
 }
 
 void Section::setType(const SectionType& type) {
