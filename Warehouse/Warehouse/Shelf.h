@@ -15,6 +15,7 @@ public:
 	bool isFull() const; // getter for this->isShelfFull
 	void isFull(bool isFull); // setter for this->isShelfFull
 
+	vector<Cell*> getCells() const;
 	Cell* at(size_t index);
 	void addCell(Cell* cell);
 };

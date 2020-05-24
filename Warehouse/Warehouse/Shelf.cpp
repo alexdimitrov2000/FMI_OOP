@@ -31,6 +31,10 @@ void Shelf::isFull(bool isFull) {
 	this->isShelfFull = isFull;
 }
 
+vector<Cell*> Shelf::getCells() const {
+	return this->cells;
+}
+
 Cell* Shelf::at(size_t index) {
 	return this->cells[index];
 }
