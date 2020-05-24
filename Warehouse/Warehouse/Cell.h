@@ -15,6 +15,7 @@ public:
 
 	bool isFull() const; // gets the value of this->isCellFull
 	void isFull(bool isFull); // sets value of this->isCellFull
+	bool isEmpty() const;
 
 	vector<Product*> getProducts() const;
 

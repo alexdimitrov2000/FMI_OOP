@@ -35,6 +35,10 @@ void Cell::isFull(bool isFull) {
 	this->isCellFull = isFull;
 }
 
+bool Cell::isEmpty() const {
+	return this->products.size() == 0;
+}
+
 void Cell::addProduct(Product* product) {
 	this->products.push_back(product);
 
