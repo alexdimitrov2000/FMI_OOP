@@ -205,7 +205,7 @@ ProductLocation Warehouse::findLocationForProduct(int sectionIndex, const string
 	return location;
 }
 
-void Warehouse::addProduct(vector<string> tokens)
+Product* Warehouse::addProduct(vector<string> tokens)
 {
 	int sectionIndex = this->getSectionIndexByType(tokens[0]);
 	Section* section = this->sections[sectionIndex];
@@ -223,4 +223,6 @@ void Warehouse::addProduct(vector<string> tokens)
 	section->addToSectionProducts(product);
 
 	cout << ADDED_PRODUCT_SUCCESS_MESSAGE << endl;
+
+	return product;
 }

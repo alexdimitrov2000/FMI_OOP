@@ -25,5 +25,5 @@ public:
 	void addFileProducts(vector<string> fileLines);
 	void printProducts();
 	vector<Product*> getProducts();
-	void addProduct(vector<string> tokens);
+	Product* addProduct(vector<string> tokens);
 };
