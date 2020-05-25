@@ -29,4 +29,5 @@ public:
 	void setType(const SectionType& type);
 	void addShelf(Shelf* shelf);
 	void addToSectionProducts(Product* product);
+	void deleteFromSectionProducts(Product* product);
 };

@@ -81,3 +81,18 @@ void Section::addToSectionProducts(Product* product) {
 	this->products.push_back(product); // adding the product to the current collection
 	this->shelves[location.getShelf()]->at(location.getCell())->addProduct(product); // adding the product to the particular cell
 }
+
+void Section::deleteFromSectionProducts(Product* product) {
+	ProductLocation location;
+
+	for (vector<Product*>::iterator i = this->products.begin(); i != this->products.end(); i++) {
+		if (*i == product) {
+			location = product->getLocation();
+
+			this->shelves[location.getShelf()]->at(location.getCell())->deleteProduct(product); // delete the product from the heap and remove it from the particular cell
+			this->products.erase(i); // remove the product from the current collection
+
+			break;
+		}
+	}
+}
