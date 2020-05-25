@@ -136,6 +136,7 @@ ProductLocation Warehouse::findLocationForProduct(int sectionIndex, const string
 	Cell* cell;
 
 	if (!section->containsProductWithName(name)) {
+		// logic for getting location when the product name is unique in the warehouse
 		for (int i = 0; i < shelvesCnt; i++)
 		{
 			shelf = section->at(i);
@@ -154,16 +155,34 @@ ProductLocation Warehouse::findLocationForProduct(int sectionIndex, const string
 		}
 	}
 
-	// TODO: find a location when there is existent products with that name
 	Product* existent = section->getProductByName(name);
 	int shelfNum = existent->getLocation().getShelf();
 	int cellNum = existent->getLocation().getCell();
 	cell = section->at(shelfNum)->at(cellNum);
 
 	if (existent->getExpiryDate() == expiration && !cell->isFull()) {
+		// logic for getting location when a product with that name is already existent, their expiration dates are equal and the cell has place for the new product
 		location.setShelf(shelfNum);
 		location.setCell(cellNum);
 		return location;
+	}
+
+	cellNum++; // no need to check the same cell on the first iretarion
+	// logic for getting location when a product with that name is already existent, but either their expiration dates are different or the cell of the existent one is full
+	for (int i = shelfNum; i < shelvesCnt; i++)
+	{
+		shelf = section->at(i);
+
+		for (int g = cellNum; g < cellsCnt; g++)
+		{
+			cell = shelf->at(g);
+			if (cell->isEmpty() || (cell->getProducts()[0]->getName() == name && cell->getProducts()[0]->getExpiryDate() == expiration && !cell->isFull())) {
+				location.setShelf(i);
+				location.setCell(g);
+				return location;
+			}
+		}
+		cellNum = 0;
 	}
 
 	return location;
