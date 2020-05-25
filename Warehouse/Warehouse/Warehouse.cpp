@@ -154,6 +154,18 @@ ProductLocation Warehouse::findLocationForProduct(int sectionIndex, const string
 		}
 	}
 
+	// TODO: find a location when there is existent products with that name
+	Product* existent = section->getProductByName(name);
+	int shelfNum = existent->getLocation().getShelf();
+	int cellNum = existent->getLocation().getCell();
+	cell = section->at(shelfNum)->at(cellNum);
+
+	if (existent->getExpiryDate() == expiration && !cell->isFull()) {
+		location.setShelf(shelfNum);
+		location.setCell(cellNum);
+		return location;
+	}
+
 	return location;
 }
 
