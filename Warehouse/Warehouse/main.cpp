@@ -93,7 +93,9 @@ int main()
 		}
 		else if (command == ADD_COMMAND) {
 			tokens.erase(tokens.begin()); // remove the 'add' command string from the vector
-			warehouse.addProduct(tokens);
+			Product* product = warehouse.addProduct(tokens);
+
+			fileManager.logsAddProduct(product);
 		}
 		else {
 			cout << INVALID_COMMAND_MESSAGE << endl;

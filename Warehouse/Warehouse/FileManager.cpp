@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include "FileManager.h"
 
@@ -16,8 +17,11 @@ const string HELP_MESSAGE = "The following commands are supported:\n"
 							"help		prints this information\n"
 							"operations	prints supported operations\n"
 							"exit		exits the program";
+const string LOGS = "logs-";
+const string SPACE_DELIMITER = " ";
+const string ADDED = "Added ";
 
-FileManager::FileManager() : lines(), filePath(), isOpened(), products() {}
+FileManager::FileManager() : lines(), logsData(), filePath(), isOpened(), products() {}
 
 bool FileManager::isFileOpened() const {
 	return this->isOpened;
@@ -77,7 +81,29 @@ void FileManager::saveAs(const string& filePath) {
 
 		output.close();
 
+		this->saveLogsFile(filePath);
+
 		cout << SAVE_SUCCESS << filePath << endl;
+	}
+	else {
+		cout << SAVE_FAIL << endl;
+	}
+}
+
+void FileManager::saveLogsFile(const string& filePath) {
+	ofstream output;
+	string logsFilePath = (LOGS + filePath);
+
+	output.open(logsFilePath, ios::out | ios::app);
+
+
+	if (output.is_open())
+	{
+		for (string& line : this->logsData) {
+			output << line << endl;
+		}
+
+		output.close();
 	}
 	else {
 		cout << SAVE_FAIL << endl;
@@ -92,6 +118,14 @@ void FileManager::close() {
 
 void FileManager::help() {
 	cout << HELP_MESSAGE << endl;
+}
+
+void FileManager::logsAddProduct(const Product* product) {
+	ostringstream buffer;
+	buffer << product->getEntryDate() << SPACE_DELIMITER << ADDED << product->getAvailableQuantity()
+		<< SPACE_DELIMITER << product->getName() << SPACE_DELIMITER << product->getManufacturerName();
+	
+	this->logsData.push_back(buffer.str());
 }
 
 vector<string> FileManager::getFileContent() const {

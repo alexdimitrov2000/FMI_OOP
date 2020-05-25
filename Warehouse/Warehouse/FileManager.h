@@ -7,10 +7,12 @@ using namespace std;
 class FileManager {
 private:
 	vector<string> lines;
+	vector<string> logsData;
 	string filePath;
 	bool isOpened;
 	vector<Product*> products;
 
+	void saveLogsFile(const string& filePath);
 public:
 	FileManager();
 
@@ -22,6 +24,8 @@ public:
 	void saveAs(const string& filePath);
 	void close();
 	void help();
+
+	void logsAddProduct(const Product* product);
 
 	vector<string> getFileContent() const;
 	void setProducts(const vector<Product*>& products);
