@@ -126,6 +126,23 @@ void Warehouse::printProducts() {
 	}
 }
 
+vector<Product*> Warehouse::getProducts() {
+	vector<Product*> products;
+
+	for (Section*& section : this->sections) {
+		
+		if (section->getProducts().size() == 0) {
+			continue;
+		}
+
+		for (Product*& product : section->getProducts()) {
+			products.push_back(product);
+		}
+	}
+
+	return products;
+}
+
 ProductLocation Warehouse::findLocationForProduct(int sectionIndex, const string& name, Date expiration) {
 	ProductLocation location(sectionIndex, 0, 0);
 	Section* section = this->sections[sectionIndex];

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include "Product.h"
 using namespace std;
 
 class FileManager {
@@ -8,6 +9,7 @@ private:
 	vector<string> lines;
 	string filePath;
 	bool isOpened;
+	vector<Product*> products;
 
 public:
 	FileManager();
@@ -22,4 +24,5 @@ public:
 	void help();
 
 	vector<string> getFileContent() const;
+	void setProducts(const vector<Product*>& products);
 };

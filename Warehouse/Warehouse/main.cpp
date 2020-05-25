@@ -69,9 +69,11 @@ int main()
 			cout << UNOPENED_FILE_MESSAGE << endl;
 		}
 		else if (command == SAVE_COMMAND) {
+			fileManager.setProducts(warehouse.getProducts());
 			fileManager.save();
 		}
 		else if (command == SAVE_AS_COMMAND) {
+			fileManager.setProducts(warehouse.getProducts());
 			string filePath = tokens[1];
 			fileManager.saveAs(filePath);
 		}

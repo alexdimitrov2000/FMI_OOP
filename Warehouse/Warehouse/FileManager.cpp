@@ -17,7 +17,7 @@ const string HELP_MESSAGE = "The following commands are supported:\n"
 							"operations	prints supported operations\n"
 							"exit		exits the program";
 
-FileManager::FileManager() : lines(), filePath(), isOpened() {}
+FileManager::FileManager() : lines(), filePath(), isOpened(), products() {}
 
 bool FileManager::isFileOpened() const {
 	return this->isOpened;
@@ -64,12 +64,12 @@ void FileManager::saveAs(const string& filePath) {
 
 	if (output.is_open())
 	{
-		int linesCnt = this->lines.size();
-		for (size_t i = 0; i < linesCnt; i++)
+		int productsCnt = this->products.size();
+		for (size_t i = 0; i < productsCnt; i++)
 		{
-			output << this->lines[i];
+			output << (*this->products[i]);
 
-			if (i + 1 != linesCnt)
+			if (i + 1 != productsCnt)
 			{
 				output << '\n';
 			}
@@ -96,4 +96,8 @@ void FileManager::help() {
 
 vector<string> FileManager::getFileContent() const {
 	return this->lines;
+}
+
+void FileManager::setProducts(const vector<Product*>& products) {
+	this->products = products;
 }
