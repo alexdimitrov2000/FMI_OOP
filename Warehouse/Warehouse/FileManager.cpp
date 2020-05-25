@@ -2,6 +2,8 @@
 #include <sstream>
 #include <fstream>
 #include "FileManager.h"
+#include "DateHelper.h"
+#include "StringHelper.h"
 
 const string OPEN_SUCCESS = "Successfully opened ";
 const string OPEN_FAIL = "Failed to open the file";
@@ -31,8 +33,30 @@ void FileManager::isFileOpened(bool isOpened) {
 	this->isOpened = isOpened;
 }
 
+void FileManager::openLogsFile() {
+	ifstream input;
+	input.open(this->logsFilePath, ios::in);
+
+	string line;
+	if (input.is_open())
+	{
+		while (!input.eof())
+		{
+			getline(input, line);
+			this->logsData.push_back(line);
+		}
+
+		input.close();
+	}
+	else {
+		ofstream output(filePath, ios::out);
+		output.close();
+	}
+}
+
 void FileManager::open(const string& filePath) {
 	this->filePath = filePath;
+	this->logsFilePath = (LOGS + filePath);
 
 	ifstream input;
 	input.open(filePath, ios::in);
@@ -48,6 +72,8 @@ void FileManager::open(const string& filePath) {
 		}
 
 		input.close();
+
+		this->openLogsFile();
 	}
 	else {
 		ofstream output(filePath, ios::out);
@@ -81,7 +107,7 @@ void FileManager::saveAs(const string& filePath) {
 
 		output.close();
 
-		this->saveLogsFile(filePath);
+		this->saveLogsFile();
 
 		cout << SAVE_SUCCESS << filePath << endl;
 	}
@@ -90,12 +116,10 @@ void FileManager::saveAs(const string& filePath) {
 	}
 }
 
-void FileManager::saveLogsFile(const string& filePath) {
+void FileManager::saveLogsFile() {
 	ofstream output;
-	string logsFilePath = (LOGS + filePath);
 
-	output.open(logsFilePath, ios::out | ios::app);
-
+	output.open(this->logsFilePath, ios::out | ios::app);
 
 	if (output.is_open())
 	{
@@ -107,6 +131,19 @@ void FileManager::saveLogsFile(const string& filePath) {
 	}
 	else {
 		cout << SAVE_FAIL << endl;
+	}
+}
+
+void FileManager::showLogInInterval(const string& from, const string& to) {
+	Date fromDate(from);
+	Date toDate(to);
+
+	for (string& line : this->logsData) {
+		Date logDate(StringHelper::split(line)[0]);
+
+		if (fromDate <= logDate && logDate <= toDate) {
+			cout << line << endl;
+		}
 	}
 }
 

@@ -26,6 +26,7 @@ const char PRODUCT_TYPES_COMMAND[] = "productTypes";
 const char EXIT_COMMAND[] = "exit";
 const char PRINT_COMMAND[] = "print";
 const char ADD_COMMAND[] = "add";
+const char LOG_COMMAND[] = "log";
 
 // Command Messages
 const char CLOSE_OPENED_FILE_MESSAGE[] = "There is an opened file. Please close it before you open another one.";
@@ -96,6 +97,12 @@ int main()
 			Product* product = warehouse.addProduct(tokens);
 
 			fileManager.logsAddProduct(product);
+		}
+		else if (command == LOG_COMMAND) {
+			string from = tokens[1];
+			string to = tokens[2];
+
+			fileManager.showLogInInterval(from, to);
 		}
 		else {
 			cout << INVALID_COMMAND_MESSAGE << endl;

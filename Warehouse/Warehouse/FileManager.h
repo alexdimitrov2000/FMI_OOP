@@ -9,10 +9,12 @@ private:
 	vector<string> lines;
 	vector<string> logsData;
 	string filePath;
+	string logsFilePath;
 	bool isOpened;
 	vector<Product*> products;
 
-	void saveLogsFile(const string& filePath);
+	void openLogsFile();
+	void saveLogsFile();
 public:
 	FileManager();
 
@@ -26,6 +28,7 @@ public:
 	void help();
 
 	void logsAddProduct(const Product* product);
+	void showLogInInterval(const string& from, const string& to);
 
 	vector<string> getFileContent() const;
 	void setProducts(const vector<Product*>& products);
