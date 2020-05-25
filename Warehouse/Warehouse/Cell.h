@@ -20,5 +20,5 @@ public:
 	vector<Product*> getProducts() const;
 
 	void addProduct(Product* product);
-	//void removeProduct();
+	void deleteProduct(Product* product);
 };

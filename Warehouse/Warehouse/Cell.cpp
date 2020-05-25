@@ -44,3 +44,15 @@ void Cell::addProduct(Product* product) {
 
 	this->isCellFull = this->products.size() >= MAX_PRODUCTS_IN_CELL;
 }
+
+void Cell::deleteProduct(Product* product) {
+	for (vector<Product*>::iterator i = this->products.begin(); i != this->products.end(); i++) {
+		if (*i == product) {
+			delete product;
+			this->products.erase(i);
+			break;
+		}
+	}
+
+	this->isCellFull = this->products.size() >= MAX_PRODUCTS_IN_CELL;
+}
