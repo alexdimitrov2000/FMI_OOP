@@ -22,6 +22,7 @@ const string HELP_MESSAGE = "The following commands are supported:\n"
 const string LOGS = "logs-";
 const string SPACE_DELIMITER = " ";
 const string ADDED = "Added ";
+const string CLEANED_WAREHOUSE = "Cleaned warehouse";
 
 FileManager::FileManager() : lines(), logsData(), filePath(), isOpened(), products() {}
 
@@ -95,7 +96,7 @@ void FileManager::saveAs(const string& filePath) {
 	if (output.is_open())
 	{
 		int productsCnt = this->products.size();
-		for (size_t i = 0; i < productsCnt; i++)
+		for (int i = 0; i < productsCnt; i++)
 		{
 			output << (*this->products[i]);
 
@@ -123,8 +124,15 @@ void FileManager::saveLogsFile() {
 
 	if (output.is_open())
 	{
-		for (string& line : this->logsData) {
-			output << line << endl;
+		int linesCnt = this->logsData.size();
+		for (int i = 0; i < linesCnt; i++)
+		{
+			output << this->logsData[i];
+
+			if (i + 1 != linesCnt)
+			{
+				output << '\n';
+			}
 		}
 
 		output.close();
@@ -150,6 +158,7 @@ void FileManager::showLogInInterval(const string& from, const string& to) {
 void FileManager::close() {
 	this->isOpened = false;
 	this->lines.clear();
+	this->logsData.clear();
 	cout << CLOSE_SUCCESS << this->filePath << endl;
 }
 
@@ -162,6 +171,15 @@ void FileManager::logsAddProduct(const Product* product) {
 	buffer << product->getEntryDate() << SPACE_DELIMITER << ADDED << product->getAvailableQuantity()
 		<< SPACE_DELIMITER << product->getName() << SPACE_DELIMITER << product->getManufacturerName();
 	
+	this->logsData.push_back(buffer.str());
+}
+
+void FileManager::logsCleanWarehouse() {
+	Date today = DateHelper::getTodaysDate();
+
+	ostringstream buffer;
+	buffer << today << SPACE_DELIMITER << CLEANED_WAREHOUSE;
+
 	this->logsData.push_back(buffer.str());
 }
 

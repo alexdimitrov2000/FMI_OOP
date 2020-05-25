@@ -27,6 +27,7 @@ const char EXIT_COMMAND[] = "exit";
 const char PRINT_COMMAND[] = "print";
 const char ADD_COMMAND[] = "add";
 const char LOG_COMMAND[] = "log";
+const char CLEAN_COMMAND[] = "clean";
 
 // Command Messages
 const char CLOSE_OPENED_FILE_MESSAGE[] = "There is an opened file. Please close it before you open another one.";
@@ -103,6 +104,10 @@ int main()
 			string to = tokens[2];
 
 			fileManager.showLogInInterval(from, to);
+		}
+		else if (command == CLEAN_COMMAND) {
+			warehouse.clean();
+			fileManager.logsCleanWarehouse();
 		}
 		else {
 			cout << INVALID_COMMAND_MESSAGE << endl;

@@ -29,6 +29,7 @@ public:
 
 	void logsAddProduct(const Product* product);
 	void showLogInInterval(const string& from, const string& to);
+	void logsCleanWarehouse();
 
 	vector<string> getFileContent() const;
 	void setProducts(const vector<Product*>& products);

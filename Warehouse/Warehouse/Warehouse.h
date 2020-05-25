@@ -26,4 +26,5 @@ public:
 	void printProducts();
 	vector<Product*> getProducts();
 	Product* addProduct(vector<string> tokens);
+	void clean();
 };

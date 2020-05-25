@@ -9,6 +9,8 @@ const SectionType SECTION_TYPES[] = { SectionType::Foods, SectionType::Drinks, S
 // Messages
 const string NO_PRODUCTS_IN_SECTION_MESSAGE = "No products in section.";
 const string ADDED_PRODUCT_SUCCESS_MESSAGE = "The product was successfully added to the warehouse.";
+const string CLEANED = "Cleaned ";
+const string SPACE_DELIMITER = " ";
 
 Warehouse::Warehouse() : sections(), isWarehouseFull(false) {}
 
@@ -225,4 +227,18 @@ Product* Warehouse::addProduct(vector<string> tokens)
 	cout << ADDED_PRODUCT_SUCCESS_MESSAGE << endl;
 
 	return product;
+}
+
+void Warehouse::clean() {
+	Date today = DateHelper::getTodaysDate();
+
+	for (Section*& section : this->sections) {
+		for (Product*& product : section->getProducts()) {
+			if (product->getExpiryDate() <= today) {
+				cout << CLEANED << product->getAvailableQuantity() << SPACE_DELIMITER << product->getName() << SPACE_DELIMITER << product->getManufacturerName() << endl;
+
+				section->deleteFromSectionProducts(product);
+			}
+		}
+	}
 }
