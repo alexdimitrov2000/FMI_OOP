@@ -42,6 +42,34 @@ bool Date::operator!=(const Date& other) {
 	return this->year != other.year || this->month != other.month || this->day != other.day;
 }
 
+bool Date::operator>=(const Date& other) {
+	if (*this == other) { return true; }
+	
+	if (this->year > other.year) { return true; }
+	else if (this->year == other.year) {
+		if (this->month > other.month) { return true; }
+		else if (this->month == other.month) {
+			if (this->day > other.day) { return true; }
+		}
+	}
+
+	return false;
+}
+
+bool Date::operator<=(const Date& other) {
+	if (*this == other) { return true; }
+
+	if (this->year < other.year) { return true; }
+	else if (this->year == other.year) {
+		if (this->month < other.month) { return true; }
+		else if (this->month == other.month) {
+			if (this->day < other.day) { return true; }
+		}
+	}
+
+	return false;
+}
+
 unsigned short int Date::getDay() const {
 	return this->day;
 }
