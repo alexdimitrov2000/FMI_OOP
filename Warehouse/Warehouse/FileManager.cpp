@@ -22,6 +22,7 @@ const string HELP_MESSAGE = "The following commands are supported:\n"
 const string LOGS = "logs-";
 const string SPACE_DELIMITER = " ";
 const string ADDED = "Added ";
+const string REMOVED = "Removed ";
 const string CLEANED_WAREHOUSE = "Cleaned warehouse";
 
 FileManager::FileManager() : lines(), logsData(), filePath(), isOpened(), products() {}
@@ -124,7 +125,7 @@ void FileManager::saveLogsFile(const string& path) {
 	if (path != this->filePath)
 		logsPath = (LOGS + path);
 
-	output.open(logsPath, ios::out | ios::app);
+	output.open(logsPath, ios::out);
 
 	if (output.is_open())
 	{
@@ -175,6 +176,13 @@ void FileManager::logsAddProduct(const Product* product) {
 	buffer << product->getEntryDate() << SPACE_DELIMITER << ADDED << product->getAvailableQuantity()
 		<< SPACE_DELIMITER << product->getName() << SPACE_DELIMITER << product->getManufacturerName();
 	
+	this->logsData.push_back(buffer.str());
+}
+
+void FileManager::logsRemoveProduct(const Product* product, const string& removedQuantity) {
+	ostringstream buffer;
+	buffer << DateHelper::getTodaysDate() << SPACE_DELIMITER << REMOVED << removedQuantity << SPACE_DELIMITER << product->getName();
+
 	this->logsData.push_back(buffer.str());
 }
 
