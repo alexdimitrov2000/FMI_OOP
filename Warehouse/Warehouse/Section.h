@@ -9,6 +9,7 @@ private:
 	bool isSectionFull;
 	vector<Product*> products;
 
+	int getNumberOfProductsWithName(const string& name);
 public:
 	Section();
 	Section(const SectionType& type);
@@ -25,6 +26,7 @@ public:
 	vector<Shelf*> getShelves() const;
 	bool containsProductWithName(const string& name);
 	Product* getProductByName(const string& name);
+	vector<Product*> getAllWithName(const string& name);
 
 	void setType(const SectionType& type);
 	void addShelf(Shelf* shelf);

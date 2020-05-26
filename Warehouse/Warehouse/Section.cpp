@@ -26,6 +26,7 @@ Section::~Section() {
 	}
 
 	this->shelves.clear();
+	this->isSectionFull = false;
 }
 
 bool Section::isFull() const {
@@ -53,7 +54,12 @@ vector<Shelf*> Section::getShelves() const {
 }
 
 bool Section::containsProductWithName(const string& name) {
-	return count_if(this->products.begin(), this->products.end(), [name](Product* prod) { return prod->getName() == name; }) != 0;
+	return this->getNumberOfProductsWithName(name) != 0;
+}
+
+// private method
+int Section::getNumberOfProductsWithName(const string& name) {
+	return count_if(this->products.begin(), this->products.end(), [name](Product* prod) { return prod->getName() == name; });
 }
 
 Product* Section::getProductByName(const string& name) {
@@ -64,6 +70,25 @@ Product* Section::getProductByName(const string& name) {
 	vector<Product*>::iterator product = find_if(this->products.begin(), this->products.end(), [name](Product* prod) { return prod->getName() == name; });
 
 	return *product;
+}
+
+vector<Product*> Section::getAllWithName(const string& name) {
+	vector<Product*> products;
+
+	if (!this->containsProductWithName(name)) {
+		return products;
+	}
+
+	vector<Product*>::iterator iterator = this->products.begin();
+	int productsCnt = this->getNumberOfProductsWithName(name);
+
+	for (int i = 0; i < productsCnt; i++) {
+		iterator = find_if(iterator, this->products.end(), [name](Product* prod) { return prod->getName() == name; });
+		products.push_back(*iterator);
+		iterator++;
+	}
+
+	return products;
 }
 
 void Section::setType(const SectionType& type) {

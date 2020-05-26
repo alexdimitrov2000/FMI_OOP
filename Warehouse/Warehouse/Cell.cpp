@@ -21,6 +21,7 @@ Cell::~Cell() {
 	}
 
 	this->products.clear();
+	this->isCellFull = false;
 }
 
 vector<Product*> Cell::getProducts() const {

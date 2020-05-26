@@ -21,6 +21,7 @@ Shelf::~Shelf() {
 	}
 
 	this->cells.clear();
+	this->isShelfFull = false;
 }
 
 bool Shelf::isFull() const {
