@@ -14,7 +14,7 @@ private:
 	vector<Product*> products;
 
 	void openLogsFile();
-	void saveLogsFile();
+	void saveLogsFile(const string& path);
 public:
 	FileManager();
 

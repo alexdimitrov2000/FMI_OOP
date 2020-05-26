@@ -50,7 +50,7 @@ void FileManager::openLogsFile() {
 		input.close();
 	}
 	else {
-		ofstream output(filePath, ios::out);
+		ofstream output(this->logsFilePath, ios::out);
 		output.close();
 	}
 }
@@ -78,6 +78,7 @@ void FileManager::open(const string& filePath) {
 	}
 	else {
 		ofstream output(filePath, ios::out);
+		this->openLogsFile();
 		output.close();
 	}
 
@@ -108,7 +109,7 @@ void FileManager::saveAs(const string& filePath) {
 
 		output.close();
 
-		this->saveLogsFile();
+		this->saveLogsFile(filePath);
 
 		cout << SAVE_SUCCESS << filePath << endl;
 	}
@@ -117,10 +118,13 @@ void FileManager::saveAs(const string& filePath) {
 	}
 }
 
-void FileManager::saveLogsFile() {
+void FileManager::saveLogsFile(const string& path) {
 	ofstream output;
+	string logsPath = this->logsFilePath;
+	if (path != this->filePath)
+		logsPath = (LOGS + path);
 
-	output.open(this->logsFilePath, ios::out | ios::app);
+	output.open(logsPath, ios::out | ios::app);
 
 	if (output.is_open())
 	{
