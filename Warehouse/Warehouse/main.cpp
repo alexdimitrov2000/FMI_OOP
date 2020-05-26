@@ -26,6 +26,7 @@ const char PRODUCT_TYPES_COMMAND[] = "productTypes";
 const char EXIT_COMMAND[] = "exit";
 const char PRINT_COMMAND[] = "print";
 const char ADD_COMMAND[] = "add";
+const char REMOVE_COMMAND[] = "remove";
 const char LOG_COMMAND[] = "log";
 const char CLEAN_COMMAND[] = "clean";
 
@@ -98,6 +99,14 @@ int main()
 			Product* product = warehouse.addProduct(tokens);
 
 			fileManager.logsAddProduct(product);
+		}
+		else if (command == REMOVE_COMMAND) {
+			string name = tokens[1];
+			string quantityStr = tokens[2];
+
+			Product* product = warehouse.remove(name, quantityStr);
+
+			fileManager.logsRemoveProduct(product, quantityStr);
 		}
 		else if (command == LOG_COMMAND) {
 			string from = tokens[1];
