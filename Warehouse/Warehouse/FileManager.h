@@ -28,7 +28,7 @@ public:
 	void help();
 
 	void logsAddProduct(const Product* product);
-	void logsRemoveProduct(const string& productName, const string& removedQuantity);
+	void logsRemoveProduct(const string& productName, unsigned int removedQuantity);
 	void showLogInInterval(const string& from, const string& to);
 	void logsCleanWarehouse();
 

@@ -179,9 +179,9 @@ void FileManager::logsAddProduct(const Product* product) {
 	this->logsData.push_back(buffer.str());
 }
 
-void FileManager::logsRemoveProduct(const string& productName, const string& removedQuantity) {
+void FileManager::logsRemoveProduct(const string& productName, const unsigned int removedQuantity) {
 	ostringstream buffer;
-	buffer << DateHelper::getTodaysDate() << SPACE_DELIMITER << REMOVED << removedQuantity << SPACE_DELIMITER << productName;
+	buffer << DateHelper::getTodaysDate() << SPACE_DELIMITER << REMOVED << to_string(removedQuantity) << SPACE_DELIMITER << productName;
 
 	this->logsData.push_back(buffer.str());
 }
