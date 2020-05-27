@@ -235,7 +235,7 @@ Product* Warehouse::addProduct(vector<string> tokens)
 	return product;
 }
 
-Product* Warehouse::remove(string name, string quantityStr) {
+void Warehouse::remove(string name, string quantityStr) {
 	unsigned int quantityToRemove = StringHelper::convertToInt(quantityStr);
 	bool found = false;
 	Section* section = nullptr;
@@ -250,7 +250,7 @@ Product* Warehouse::remove(string name, string quantityStr) {
 
 	if (!found) {
 		cout << INEXISTENT_WAREHOUSE_PRODUCT_MESSAGE << endl;
-		return nullptr;
+		return;
 	}
 
 	vector<Product*> products = section->getAllWithName(name);
@@ -262,7 +262,7 @@ Product* Warehouse::remove(string name, string quantityStr) {
 		product->setAvailableQuantity(newQuantity);
 
 		cout << "Removed " << quantityStr << SPACE_DELIMITER << product->getName() << " from " << product->getLocation() << endl;
-		return product;
+		return;
 	}
 }
 
