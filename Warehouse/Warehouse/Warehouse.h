@@ -6,6 +6,7 @@ private:
 	vector<Section*> sections;
 	bool isWarehouseFull;
 
+	unsigned int removeProduct(Product* product, unsigned int quantityToRemove);
 public:
 	Warehouse();
 	Warehouse(const Warehouse& other);
@@ -26,6 +27,6 @@ public:
 	void printProducts();
 	vector<Product*> getProducts();
 	Product* addProduct(vector<string> tokens);
-	void remove(string name, string quantityStr);
+	unsigned int remove(string name, string quantityStr);
 	void clean();
 };

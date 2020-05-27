@@ -12,6 +12,10 @@ const string ADDED_PRODUCT_SUCCESS_MESSAGE = "The product was successfully added
 const string CLEANED = "Cleaned ";
 const string SPACE_DELIMITER = " ";
 const string INEXISTENT_WAREHOUSE_PRODUCT_MESSAGE = "The warehouse does not contain a product with that name.";
+const string NO_REMOVED_PRODUCTS_MESSAGE = "No products were removed.";
+
+const string REMOVE_ALL_QUESTION = "You are trying to remove more products than exist. Do you want to remove all ";
+const string NO_ANSWER = "no";
 
 Warehouse::Warehouse() : sections(), isWarehouseFull(false) {}
 
@@ -138,7 +142,7 @@ vector<Product*> Warehouse::getProducts() {
 	vector<Product*> products;
 
 	for (Section*& section : this->sections) {
-		
+
 		if (section->getProducts().size() == 0) {
 			continue;
 		}
@@ -235,11 +239,41 @@ Product* Warehouse::addProduct(vector<string> tokens)
 	return product;
 }
 
-void Warehouse::remove(string name, string quantityStr) {
-	unsigned int quantityToRemove = StringHelper::convertToInt(quantityStr);
+// private method
+unsigned int Warehouse::removeProduct(Product* product, unsigned int quantityToRemove) {
+	string productName = product->getName();
+	ProductLocation location = product->getLocation();
+	unsigned int productAvailableQuantity = product->getAvailableQuantity();
+
+	if (productAvailableQuantity > quantityToRemove) {
+		unsigned int newQuantity = productAvailableQuantity - quantityToRemove;
+
+		product->setAvailableQuantity(newQuantity);
+	}
+	else {
+		cout << REMOVE_ALL_QUESTION << productAvailableQuantity << ": ";
+		string wantToRemove;
+		cin >> wantToRemove;
+		cin.ignore();
+
+		if (wantToRemove == NO_ANSWER) {
+			cout << NO_REMOVED_PRODUCTS_MESSAGE << endl;
+			return 0;
+		}
+
+		quantityToRemove = productAvailableQuantity;
+		this->sections[location.getSection()]->deleteFromSectionProducts(product);
+	}
+
+	cout << "Removed " << to_string(quantityToRemove) << SPACE_DELIMITER << productName << " from " << location << endl;
+	return quantityToRemove;
+}
+
+unsigned int Warehouse::remove(string name, string quantityStr) {
 	bool found = false;
 	Section* section = nullptr;
-	
+	unsigned int removedQuantity = 0;
+
 	for (Section*& sect : this->sections) {
 		if (sect->containsProductWithName(name)) {
 			found = true;
@@ -250,19 +284,16 @@ void Warehouse::remove(string name, string quantityStr) {
 
 	if (!found) {
 		cout << INEXISTENT_WAREHOUSE_PRODUCT_MESSAGE << endl;
-		return;
+		return removedQuantity;
 	}
 
+	unsigned int quantityToRemove = StringHelper::convertToInt(quantityStr);
 	vector<Product*> products = section->getAllWithName(name);
 	Product* product = products[0];
 
-	if (products.size() == 1 && product->getAvailableQuantity() > quantityToRemove) {
-		unsigned int newQuantity = product->getAvailableQuantity() - quantityToRemove;
-
-		product->setAvailableQuantity(newQuantity);
-
-		cout << "Removed " << quantityStr << SPACE_DELIMITER << product->getName() << " from " << product->getLocation() << endl;
-		return;
+	if (products.size() == 1) {
+		removedQuantity = this->removeProduct(product, quantityToRemove);
+		return removedQuantity;
 	}
 }
 
