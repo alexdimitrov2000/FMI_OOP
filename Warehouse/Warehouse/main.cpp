@@ -104,9 +104,11 @@ int main()
 			string name = tokens[1];
 			string quantityStr = tokens[2];
 
-			warehouse.remove(name, quantityStr);
+			unsigned int removedQuantity = warehouse.remove(name, quantityStr);
 
-			fileManager.logsRemoveProduct(name, quantityStr);
+			if (removedQuantity != 0) {
+				fileManager.logsRemoveProduct(name, removedQuantity);
+			}
 		}
 		else if (command == LOG_COMMAND) {
 			string from = tokens[1];
