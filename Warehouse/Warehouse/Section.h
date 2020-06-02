@@ -27,6 +27,7 @@ public:
 	bool containsProductWithName(const string& name);
 	Product* getProductByName(const string& name);
 	vector<Product*> getAllWithName(const string& name);
+	void sortByExpiryDate(vector<Product*>& products);
 
 	void setType(const SectionType& type);
 	void addShelf(Shelf* shelf);

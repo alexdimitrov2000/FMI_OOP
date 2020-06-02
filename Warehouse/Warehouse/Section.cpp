@@ -53,13 +53,13 @@ vector<Shelf*> Section::getShelves() const {
 	return this->shelves;
 }
 
-bool Section::containsProductWithName(const string& name) {
-	return this->getNumberOfProductsWithName(name) != 0;
-}
-
 // private method
 int Section::getNumberOfProductsWithName(const string& name) {
 	return count_if(this->products.begin(), this->products.end(), [name](Product* prod) { return prod->getName() == name; });
+}
+
+bool Section::containsProductWithName(const string& name) {
+	return this->getNumberOfProductsWithName(name) != 0;
 }
 
 Product* Section::getProductByName(const string& name) {
@@ -89,6 +89,10 @@ vector<Product*> Section::getAllWithName(const string& name) {
 	}
 
 	return products;
+}
+
+void Section::sortByExpiryDate(vector<Product*>& products) {
+	sort(products.begin(), products.end(), [](Product* first, Product* second) { return first->getExpiryDate() <= second->getExpiryDate(); });
 }
 
 void Section::setType(const SectionType& type) {
