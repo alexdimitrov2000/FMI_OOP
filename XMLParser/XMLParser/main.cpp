@@ -20,7 +20,6 @@ const char CHILD_COMMAND[] = "child";
 const char TEXT_COMMAND[] = "text";
 const char DELETE_COMMAND[] = "delete";
 const char NEWCHILD_COMMAND[] = "newchild";
-const char XPATH_COMMAND[] = "xpath";
 
 // Command Messages
 const char CLOSE_OPENED_FILE_MESSAGE[] = "There is an opened file. Please close it before you open another one.";
@@ -126,9 +125,6 @@ int main()
 			string tag = tokens[2];
 
 			parser.addChildToElement(id, tag);
-		}
-		else if (command == XPATH_COMMAND) {
-			
 		}
 		else {
 			cout << INVALID_COMMAND_MESSAGE << endl;
