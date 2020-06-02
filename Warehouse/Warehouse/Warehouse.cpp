@@ -12,10 +12,14 @@ const string ADDED_PRODUCT_SUCCESS_MESSAGE = "The product was successfully added
 const string CLEANED = "Cleaned ";
 const string SPACE_DELIMITER = " ";
 const string INEXISTENT_WAREHOUSE_PRODUCT_MESSAGE = "The warehouse does not contain a product with that name.";
-const string NO_REMOVED_PRODUCTS_MESSAGE = "No products were removed.";
+const string NO_REMOVED_PRODUCTS_MESSAGE = "No products were removed from ";
 
 const string REMOVE_ALL_QUESTION = "You are trying to remove more products than exist. Do you want to remove all ";
 const string NO_ANSWER = "no";
+const string REMOVED = "Removed ";
+const string FROM = " from ";
+const string EXPIRING_ON = " expiring on ";
+const string YES_NO = " (yes/no): ";
 
 Warehouse::Warehouse() : sections(), isWarehouseFull(false) {}
 
@@ -245,19 +249,22 @@ unsigned int Warehouse::removeProduct(Product* product, unsigned int quantityToR
 	ProductLocation location = product->getLocation();
 	unsigned int productAvailableQuantity = product->getAvailableQuantity();
 
+	// checks if there are enough products to be removed
 	if (productAvailableQuantity > quantityToRemove) {
 		unsigned int newQuantity = productAvailableQuantity - quantityToRemove;
 
 		product->setAvailableQuantity(newQuantity);
 	}
 	else {
-		cout << REMOVE_ALL_QUESTION << productAvailableQuantity << ": ";
+		cout << REMOVE_ALL_QUESTION << productAvailableQuantity << EXPIRING_ON << product->getExpiryDate() << YES_NO;
+		// if there are less products than wanted to be removed, the user is asked if he still wants to remove what is left of that product
 		string wantToRemove;
 		cin >> wantToRemove;
 		cin.ignore();
 
 		if (wantToRemove == NO_ANSWER) {
-			cout << NO_REMOVED_PRODUCTS_MESSAGE << endl;
+			// if the user refuses to remove the left products, then nothing changes in the warehouse
+			cout << NO_REMOVED_PRODUCTS_MESSAGE << product->getLocation() << endl;
 			return 0;
 		}
 
@@ -265,7 +272,7 @@ unsigned int Warehouse::removeProduct(Product* product, unsigned int quantityToR
 		this->sections[location.getSection()]->deleteFromSectionProducts(product);
 	}
 
-	cout << "Removed " << to_string(quantityToRemove) << SPACE_DELIMITER << productName << " from " << location << endl;
+	cout << REMOVED << to_string(quantityToRemove) << SPACE_DELIMITER << productName << FROM << location << endl;
 	return quantityToRemove;
 }
 
@@ -274,6 +281,7 @@ unsigned int Warehouse::remove(string name, string quantityStr) {
 	Section* section = nullptr;
 	unsigned int removedQuantity = 0;
 
+	// checks if a product with such name exists in the warehouse
 	for (Section*& sect : this->sections) {
 		if (sect->containsProductWithName(name)) {
 			found = true;
@@ -289,12 +297,27 @@ unsigned int Warehouse::remove(string name, string quantityStr) {
 
 	unsigned int quantityToRemove = StringHelper::convertToInt(quantityStr);
 	vector<Product*> products = section->getAllWithName(name);
-	Product* product = products[0];
-
+	
+	// if there is a single product with such name then a part of it or all of it is removed
 	if (products.size() == 1) {
-		removedQuantity = this->removeProduct(product, quantityToRemove);
+		removedQuantity = this->removeProduct(products[0], quantityToRemove);
 		return removedQuantity;
 	}
+
+	section->sortByExpiryDate(products); // void function that sorts the given products by their expiry date in ascending order
+	
+	for (Product*& product : products) {
+		removedQuantity = this->removeProduct(product, quantityToRemove);
+
+		// checks if the given by the user quantity is removed
+		if (removedQuantity == quantityToRemove) {
+			return removedQuantity;
+		}
+
+		quantityToRemove -= removedQuantity;
+	}
+
+	return removedQuantity;
 }
 
 void Warehouse::clean() {
